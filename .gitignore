@@ -1,0 +1,13 @@
+.idea
+
+#cause i don't know which one works
+venv/
+.env
+.venv
+venv
+
+
+*.pyc
+*.pyo
+
+media/

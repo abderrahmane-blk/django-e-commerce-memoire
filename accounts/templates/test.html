@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>the test page</p>
+
+    {% if user.is_authenticated %}
+    <br>
+
+    <p>hello {{user}}  </p>
+
+        {% if user.is_staff %}
+        <p> you are a master</p>
+        {% else %}
+            {% autoescape on %}
+                
+            {% endautoescape %}
+            
+
+        {% endif %}
+
+       
+    {% else %}
+    
+    <br>
+
+    <p>who are you mister?</p>
+    {% endif %}
+
+
+</br>
+<p>the session :</p>
+{{session.session_key}}
+</br>
+
+
+
+    <a href ="{% url 'login' %}">login</a>
+    <br/>
+    <a href ="{% url 'logout' %}">logout</a>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout from form</button>
+    </form>
+
+</body>
+</html>

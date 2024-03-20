@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+</head>
+<body>
+
+    <h1>the cart</h1>
+
+    <h3>items in cart</h3>
+    <ul>
+        {% for product in products_in_cart %}
+        <li>{{product.name}}    {{product.price}}  <a href="{% url 'remove from cart' product.id %}">remove from cart</a></li>
+        {% endfor %}
+
+    </ul>
+    
+</body>
+</html>
