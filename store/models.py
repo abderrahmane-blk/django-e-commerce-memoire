@@ -62,6 +62,11 @@ class Cart(models.Model):
     items = models.JSONField(default=dict)
     session = models.ForeignKey(Session,  on_delete=models.CASCADE)
 
+class Cart_item(models.Model):
+    product = models.ForeignKey(Product , on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart , on_delete=models.CASCADE)
+    quantity =models.IntegerField(default=1,null=False ,)#add a validator here
+
 
 
 

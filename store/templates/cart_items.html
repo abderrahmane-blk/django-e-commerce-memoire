@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+</head>
+<body>
+
+    <h1>the cart2</h1>
+
+    <h3>items in cart</h3>
+    <ul>
+        {% for product in cart_items %}
+        <li>{{product.product.name}}    {{product.product.price}}   quantity : {{product.quantity}} <br>
+            <a href="{% url 'more of' product.product.id%}">more</a>
+            <a href="{% url 'less of' product.product.id%}">less</a>
+            <a href="{% url 'del from cart2' product.product.id%}">delete from the cart</a>
+        
+        </li>
+        {% endfor %}
+
+    </ul>
+    
+</body>
+</html>
