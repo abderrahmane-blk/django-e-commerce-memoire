@@ -8,7 +8,21 @@
 <body>
     <p>the test page</p>
 
+    <br>
+
+    <a href="{% url "cart" %}">cart</a>
+    <br>
+
+    <a href="{% url "main" %}">main page</a>
+    <br>
+
+
+
     {% if user.is_authenticated %}
+    
+   
+
+
     <br>
 
     <p>hello {{user}}  </p>
@@ -24,11 +38,15 @@
         {% endif %}
 
        
-    {% else %}
+
+    
+    {% else %}{% comment %} now if not logged in {% endcomment %}
     
     <br>
 
     <p>who are you mister?</p>
+
+    <a href="{% url "new-vendor" %}"> register as vendor</a>
     {% endif %}
 
 
@@ -39,7 +57,7 @@
 
     <a href ="{% url 'login' %}">login</a>
     <br/>
-    <a href ="{% url 'logout' %}">logout</a>
+    <a href ="{% url 'logout' %}">logout   :u have to use the form logout</a>
     <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit">Logout from form</button>

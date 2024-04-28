@@ -23,73 +23,73 @@ def main_view(request):
 #deleting sessions
 
 #to be deleted
-def view_cart(request):
-    if not request.session:
-        request.session.create()
-    session= request.session._get_session_from_db()
+# def view_cart(request):
+#     if not request.session:
+#         request.session.create()
+#     session= request.session._get_session_from_db()
 
 
-    cart = Cart.objects.filter(session=session).last()
-    if cart is None:
-        cart = Cart.objects.create(session=session)  
+#     cart = Cart.objects.filter(session=session).last()
+#     if cart is None:
+#         cart = Cart.objects.create(session=session)  
 
-    for a,b in cart.items.items():
-        print( str(a)+' has '+str(b) )
+#     for a,b in cart.items.items():
+#         print( str(a)+' has '+str(b) )
     
 
-    products_in_cart =Product.objects.filter(pk__in=cart.items.keys())
+#     products_in_cart =Product.objects.filter(pk__in=cart.items.keys())
 
-    return render(request ,'cart.html' ,{'cart':cart ,'products_in_cart':products_in_cart})
+#     return render(request ,'cart.html' ,{'cart':cart ,'products_in_cart':products_in_cart})
 
 
 
-def add_to_cart(request ,pid):
-    if not request.session:
-        request.session.create()
-    session_key = request.session._get_session_from_db()
-    print(request.session)
+# def add_to_cart(request ,pid):
+#     if not request.session:
+#         request.session.create()
+#     session_key = request.session._get_session_from_db()
+#     print(request.session)
 
-    cart = Cart.objects.filter(session=session_key).last()
+#     cart = Cart.objects.filter(session=session_key).last()
 
-    if cart is None:
-        cart = Cart.objects.create(session=session_key ,items=[pid,])
-    else:
-        print(cart.items)
-        cart.items[pid]=1
-        cart.save()# again , do not forget to save after append
+#     if cart is None:
+#         cart = Cart.objects.create(session=session_key ,items=[pid,])
+#     else:
+#         print(cart.items)
+#         cart.items[pid]=1
+#         cart.save()# again , do not forget to save after append
     
-    #return render(request ,'cart.html' ,{'cart':cart})
-    return JsonResponse({
-            'message':'added successfully',
-            'items_count':len(cart.items),
-        }) 
+#     #return render(request ,'cart.html' ,{'cart':cart})
+#     return JsonResponse({
+#             'message':'added successfully',
+#             'items_count':len(cart.items),
+#         }) 
 
 
-def remove_from_cart(request ,pid):
-    if not request.session:
-        return JsonResponse({}) 
+# def remove_from_cart(request ,pid):
+#     if not request.session:
+#         return JsonResponse({}) 
 
-    session_key = request.session._get_session_from_db()
-
-
-    cart = Cart.objects.filter(session=session_key).last()
-
-    if cart is None:
-        return JsonResponse({}) 
+#     session_key = request.session._get_session_from_db()
 
 
-    else:
-        print(cart.items)
-        del cart.items[pid]
-        print(cart.items)
+#     cart = Cart.objects.filter(session=session_key).last()
 
-        cart.save()# again , do not forget to save after append
+#     if cart is None:
+#         return JsonResponse({}) 
+
+
+#     else:
+#         print(cart.items)
+#         del cart.items[pid]
+#         print(cart.items)
+
+#         cart.save()# again , do not forget to save after append
     
-    #return render(request ,'cart.html' ,{'cart':cart})
-    return JsonResponse({
-            'message':'deleted from cart successfully',
-            'items_count':len(cart.items),
-        }) 
+#     #return render(request ,'cart.html' ,{'cart':cart})
+#     return JsonResponse({
+#             'message':'deleted from cart successfully',
+#             'items_count':len(cart.items),
+#         }) 
 
 
 
@@ -103,11 +103,6 @@ def remove_from_cart(request ,pid):
 
 def view_cart_with_items(request):
 
-    # print('----------')    
-    # print('----------')
-    # print(request.session)
-    # print(request.session.session_key)
-    # print('----------')
     print('-----1-----')
 
 
@@ -170,7 +165,7 @@ def add_cart_item(request ,pid):
     items_in_cart =cart.cart_item_set.count() 
     print(items_in_cart)
 
-    return redirect('cart2')
+    return redirect(view_cart_with_items)
 
     """later the return should be changed to this
         return JsonResponse({
@@ -178,6 +173,12 @@ def add_cart_item(request ,pid):
                 'items_count':items_in_cart,
             }) 
     """
+
+
+
+#prblem here ^^^^^ fix it
+
+
 
 
 
@@ -252,18 +253,14 @@ def less_of(request,pid):
         product=product_to_substract_quantity
     ).first()
     a=item.quantity=item.quantity-1
-    item.save()
-
-    if a<=0:
-        """delete
 
 
-          item 
-
-
-          here
+    if not a<=0:
         """
-        pass
+        nothing happens
+
+        """
+        item.save()
 
 
     items_in_cart =cart.cart_item_set.count() 

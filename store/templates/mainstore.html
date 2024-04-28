@@ -11,13 +11,13 @@
     </style>
 </head>
 <body>
-<a href="{%url 'cart2'%}">go to cart</a>
+<a href="{%url 'cart'%}">go to cart</a>
 <br>
 
     <ul>
 {% for product in products  %}
 <li>
-{{product.name}}    <a href="{% url 'add cart2' product.id %}">add to cart</a>
+{{product.name}}    <a href="{% url 'add cart' product.id %}">add to cart</a>
 
 
 </li>

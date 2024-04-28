@@ -1,0 +1,172 @@
+* ,*::after ,*::before {
+    box-sizing: border-box;
+}
+
+.container{
+    width: 90%;
+    max-width:1200px ;
+    padding: 5px;
+    margin: 0% auto;
+    text-align: center;
+}
+
+img{
+    max-width: 100%;
+}
+
+
+
+.body-bg{
+    background-color: rgb(233, 234, 234);
+}
+
+
+
+
+.the-card{
+    min-height: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    display: flex;
+    margin: 15px 0;
+
+    background-color: rgb(241, 243, 243);
+
+}
+
+/* things in the card */
+.card__image{
+    background-color: transparent;
+    @media (min-width:800px) {
+        width: 20%;
+    }
+}
+
+.card__image img{
+    max-height: 20vh;
+    
+}
+
+.card__body{
+    flex-grow: 1;
+    padding-left: 15px;
+
+}
+.card__btns{
+    min-width: 22%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+.card__btns *{
+   display: inline-block;
+   margin: 2px;
+
+}
+/* inside the card body */
+
+.card__body{
+    display: flex;
+    text-align: start;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+.card__body__item{
+    flex-grow: 1;
+}
+
+
+
+
+/* the total section */
+
+.total{
+    margin: 0 auto;
+    text-align: center;
+    width: 50%;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+
+.buy-btn{
+    width: 100%;
+}
+
+
+
+
+
+
+
+/* responsiveness */
+
+@media(max-width: 800px){
+    .the-card{
+        flex-wrap: wrap;
+    }
+
+
+
+    .card__image{
+       width: 100%;
+    }
+
+    .card__image img{
+        max-height: 40vh;
+    }
+    .card__body{
+       width: 70%;
+    
+    }
+    .card__btns{
+        width: 30%;
+    }
+
+    .total{
+        width: 70%;
+    }
+
+}
+
+
+@media(max-width: 600px){
+    .the-card{
+        flex-direction: column;   
+    }
+
+
+    .card__image{
+       width: 100%;
+    }
+    .card__body{
+       width: 100%;
+       text-align: center;
+    
+    }
+    .card__body *{
+        width: 100%;
+     
+     }
+
+
+
+
+
+    .card__btns{
+        width: 100%;
+    }
+    .total{
+        width: 80%;
+    }
+}
+
+
