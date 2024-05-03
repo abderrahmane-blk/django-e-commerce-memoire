@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-.container{
+.main_cart .container{
     width: 90%;
     max-width:1200px ;
     padding: 5px;
@@ -10,20 +10,20 @@
     text-align: center;
 }
 
-img{
+.main_cart img{
     max-width: 100%;
 }
 
 
 
-.body-bg{
+.main_cart .body-bg{
     background-color: rgb(233, 234, 234);
 }
 
 
 
 
-.the-card{
+.main_cart .the-card{
     min-height: 120px;
     border-radius: 10px;
     overflow: hidden;
@@ -36,24 +36,24 @@ img{
 }
 
 /* things in the card */
-.card__image{
+.main_cart .card__image{
     background-color: transparent;
     @media (min-width:800px) {
         width: 20%;
     }
 }
 
-.card__image img{
+.main_cart .card__image img{
     max-height: 20vh;
     
 }
 
-.card__body{
+.main_cart .card__body{
     flex-grow: 1;
     padding-left: 15px;
 
 }
-.card__btns{
+.main_cart .card__btns{
     min-width: 22%;
     padding: 5px;
     display: flex;
@@ -63,21 +63,21 @@ img{
 
 }
 
-.card__btns *{
+.main_cart .card__btns *{
    display: inline-block;
    margin: 2px;
 
 }
 /* inside the card body */
 
-.card__body{
+.main_cart .card__body{
     display: flex;
     text-align: start;
     align-items: center;
     flex-wrap: wrap;
 
 }
-.card__body__item{
+.main_cart .card__body__item{
     flex-grow: 1;
 }
 
@@ -110,24 +110,25 @@ img{
 /* responsiveness */
 
 @media(max-width: 800px){
-    .the-card{
+    .main_cart .the-card{
         flex-wrap: wrap;
     }
 
 
 
-    .card__image{
+    .main_cart .card__image{
        width: 100%;
+       text-align: center;
     }
 
-    .card__image img{
+    .main_cart .card__image img{
         max-height: 40vh;
     }
-    .card__body{
+    .main_cart .card__body{
        width: 70%;
     
     }
-    .card__btns{
+    .main_cart .card__btns{
         width: 30%;
     }
 
@@ -139,20 +140,21 @@ img{
 
 
 @media(max-width: 600px){
-    .the-card{
+    .main_cart .the-card{
         flex-direction: column;   
     }
 
 
-    .card__image{
-       width: 100%;
-    }
-    .card__body{
+    .main_cart .card__image{
        width: 100%;
        text-align: center;
+
+    }
+    .main_cart .card__body{
+       width: 100%;
     
     }
-    .card__body *{
+    .main_cart .card__body *{
         width: 100%;
      
      }
@@ -161,7 +163,7 @@ img{
 
 
 
-    .card__btns{
+     .main_cart .card__btns{
         width: 100%;
     }
     .total{

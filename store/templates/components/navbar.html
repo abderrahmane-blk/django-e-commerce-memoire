@@ -1,7 +1,7 @@
 <header>
     <div class="header-main">
       <div class="container">
-        <a href="index.html" class="header-logo"> <span>X</span>Commerce </a>
+        <a href="{% url "the main" %}" class="header-logo"> <span>X</span>Commerce </a>
 
         <div class="header-search-container">
           <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
@@ -19,7 +19,7 @@
           </button>
 
           <button class="action-btn">
-            <a href="card.html">
+            <a href="{%url "cart"%}">
               <i class="bi bi-cart"></i>
               <span class="count">0</span>
             </a>

@@ -54,9 +54,10 @@ def register_vendor(request):
             Vendor_info.objects.create(vendor_specific_property=vendor_specific_property , store_deposit_account=store_deposit_account ,user=new_user)
 
             
-            #print(new_user)
+            print(new_user)
+            print('-------worked----------')
 
-
+        print('-------not registers , redirect to login----------')
         return redirect('login')
         pass
 

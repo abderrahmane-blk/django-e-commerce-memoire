@@ -11,8 +11,7 @@ from django.contrib.sessions.models import Session
 class Category(models.Model):
     name = models.CharField(max_length=255 ,unique=True)
 
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
+  
 
     def __str__(self) -> str:
         return self.name
@@ -25,7 +24,7 @@ class Product(models.Model):
     small_description=models.CharField(max_length=1500,null=True)
     #slug = models.SlugField(unique=True, blank=True)  # Auto-generate slug from title
     description = models.TextField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)  # Consider using DecimalField for currency
+    price = models.DecimalField(max_digits=8, decimal_places=2)  # Consider using DecimalField for currency
     #condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, blank=True, null=True)
     image = models.ImageField( blank=True, null=True)  # Define image upload path
     featured = models.BooleanField(default=False)

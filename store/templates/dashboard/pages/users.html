@@ -1,0 +1,53 @@
+{% extends "../basedashboard.html" %}
+
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+    <div class="table_container">
+      <div class="table_body">
+        <div class="selles-header">
+          <h2>Users</h2>
+        </div>
+
+        <table id="myTable">
+          <thead>
+            <tr>
+              <td></td>
+              <td>Name</td>
+              <td>Type</td>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for user in users %}
+                <tr class="table_row">
+                  <td width="60px">
+                    <div class="imgBx"><img src="{% static "dashboard assets/images/user.jpg" %}" alt="" /></div>
+                  </td>
+                  <td class="">Omar Abdo</td>
+                  <td class="">Vendor</td>
+                  <td>
+                    <button class="btn ban_btn yellowBtn">Ban</button>
+                  </td>
+                  <td>
+                    <button class="btn delete_row deleteBtn">delete</button>
+                  </td>
+                </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+{% endblock content %}
+
+
+
+
+     

@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+    <!-- taiwindcs -->
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+    {% comment %} <link rel="stylesheet" href="{% static "css/navbar.css" %}" /> {% endcomment %}
+    <title>Test Project</title>
+  </head>
+  <body>
+    
+
+    <header>
+      <!-- <div class="header-main"> -->
+        <div class="header_body">
+          <a href="{% url "the main" %}" class="header-logo"> <span>X</span>Commerce </a>
+
+          <div class="header-search-container">
+            <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
+
+            <button class="search-btn">
+              <ion-icon name="search-outline"></ion-icon>
+            </button>
+          </div>
+
+          <div class="header-user-actions">
+
+            <button class="action-btn">
+              <a href="{% url "cart" %}">
+                <i class="bi bi-cart"></i>
+                <span class="count">0</span>
+              </a>
+            </button>
+
+            {% if request.user.is_authenticated %}
+              <button class="action-btn">
+                <a href="{% url "dashboard" %}">
+                  <ion-icon name="person-outline"></ion-icon>
+                </a>
+              </button>
+            {% endif %}
+
+            <button class="action-btn">
+              <a href=""></a>
+              <i class="bi bi-list"></i>
+            </button>
+          </div>
+        </div>
+      <!-- </div> -->
+    </header>
+    <!--  bootstrap -->
+  
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    
+  </body>
+</html>

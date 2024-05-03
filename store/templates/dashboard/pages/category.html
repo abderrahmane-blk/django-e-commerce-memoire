@@ -1,0 +1,46 @@
+{% extends "../basedashboard.html" %}
+
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+
+
+
+    <div class="table_container">
+      <div class="table_body">
+        <div class="selles-header">
+          <h2>categories</h2>
+          <a href="" class="btn">Add Product</a>
+        </div>
+        <table id="myTable">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Qunatity</td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="table_row">
+              <td class="">Category 1</td>
+              <td class="">22</td>
+              <td>
+                <button class="btn editBtn yellowBtn">Edit</button>
+              </td>
+              <td>
+                <button class="btn delete_row deleteBtn">delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+{% endblock content %}
+
+

@@ -1,0 +1,69 @@
+{% extends "../basedashboard.html" %}
+
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+
+      <div class="table_container">
+        <div class="search-for-vendor">
+          <input type="text" name="" placeholder="Specific Vendor..." id="" />
+          <button class="">Serach</button>
+        </div>
+        <div class="table_body">
+          <div class="selles-header">
+            <h2>All Selles</h2>
+          </div>
+          <table id="myTable">
+            <thead>
+              <tr>
+                <td>Vendor</td>
+                <td>Cusotmer</td>
+                <td>Ammonut</td>
+                <td>Date</td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr class="table_row">
+                <td class="">Vendor 1</td>
+                <td class="">Cusetomer 1</td>
+                <td class="">$1200</td>
+                <td class="">09/33/1999</td>
+                <td>
+                  <button class="btn delete_row yellowBtn">delete</button>
+                </td>
+              </tr>
+              <tr class="table_row">
+                <td class="">Vendor 4</td>
+                <td class="">Cusetomer 398</td>
+                <td class="">$1200</td>
+                <td class="">09/33/1999</td>
+                <td>
+                  <button class="btn yellowBtn delete_row">delete</button>
+                </td>
+              </tr>
+              <tr class="table_row">
+                <td class="">Vendor 2</td>
+                <td class="">Cusetomer 2</td>
+                <td class="">$1206</td>
+                <td class="">09/34/1999</td>
+                <td>
+                  <button class="btn yellowBtn delete_row">delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+{% endblock content %}
+
+
+
+
+        

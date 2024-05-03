@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.urls import reverse
 from .models import *
+
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -292,7 +294,72 @@ def del_cart_item(request,pid):
 
 
 
+# implementing the front end
+
+def app_main(request):
+
+    categories = Category.objects.all()
+    products = Product.objects.all()
+
+    # for i in all_products:
+    #     print(i)
+
+
+    return render(request,'index.html',{'categories':categories , 'products': products})
 
 
 
+def product_details(request , id):
+    product =Product.objects.filter(pk=id).first()
+    print(product)
+
+    return render(request ,'productPage.html' ,{'product':product})
+
+
+
+
+# ______________  all about the dashboard  _______________
+
+@login_required
+def dashboard(request):
+    user = request.user
+   
+
+    return render(request,'dashboard/pages/dashboard.html')
+
+
+
+def dashboard_account(request):
+    user = request.user
+
+    return render(request,'dashboard/pages/account.html')
+
+
+
+def dashboard_category(request):
+    user = request.user
+
+    return render(request,'dashboard/pages/category.html')
+
+
+def dashboard_products(request):
+    user = request.user
+
+    return render(request,'dashboard/pages/products.html')
+
+def dashboard_sellesdata(request):
+    user = request.user
+
+    return render(request,'dashboard/pages/sellesdata.html')
+
+def dashboard_settings(request):
+    user = request.user
+
+    return render(request,'dashboard/pages/settings.html')
+
+def dashboard_users(request):
+    user = request.user
+    users =User.objects.all()
+
+    return render(request,'dashboard/pages/users.html' ,{'users':users})
 

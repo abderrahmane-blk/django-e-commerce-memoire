@@ -11,7 +11,12 @@
    
     <!---->
     
+
     <link rel="stylesheet" href="{% static "css/cart_styles.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/navbar.css" %}">
+
+
 <style>
 
     .body-bg{
@@ -27,28 +32,15 @@
 
 
 <!-- nav -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-    <div class="c container m-auto"> <!-- Apply text-center here -->
-      <a class="navbar-brand text-center" href="#">Navbar</a>
-      <!-- Other navbar content -->
-
-
-                            
-
-
-
-
-
-    </div>
-  </nav>
+{% include "components/navbar2.html" %}
 
 
 <!-- the body -->
-<div class="title text-center"><h1 class="text-success my-3">Cart</h1></div>
+<div class=" title text-center"><h1 class="text-success my-3">Cart</h1></div>
 
 
 <!-- where cards are -->
-<div class="container">
+<div class=" main_cart container">
 
 
 
@@ -64,13 +56,13 @@
         </div>
         <div class="card__body">
             <h2 class="card__body__item">{{product.product.name}} </h2>
-            <h4  class="card__body__item"> price: {{product.product.price}} </h4>
+            <h4  class="card__body__item"> price: {{product.product.price}} DA</h4>
         </div>
         <div class="card__btns">
             <a href="{% url 'more of' product.product.id%}" class="btn btn-outline-success"><i class="bi bi-plus " ></i></a>
             <p>quantity: {{product.quantity}}</p>
             <a href="{% url 'less of' product.product.id%}" class="btn btn-outline-danger"><i class="bi bi-dash " ></i></a>
-            <a href="{% url 'del from cart' product.product.id%}" class="btn btn-outline-danger"><i class="bi bi-trash " ></i></a>
+            <a href="{% url 'del from cart' product.product.id%}" class="btn btn-danger"><i class="bi bi-trash " ></i></a>
 
         </div>
     </div>
