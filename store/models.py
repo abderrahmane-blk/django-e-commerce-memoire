@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import Vendor_info ,Customer_info,User
 from django.contrib.sessions.models import Session
 
-
+#from django.core.validators import MinValueValidator,MaxValueValidator
 
 
 
@@ -10,8 +10,6 @@ from django.contrib.sessions.models import Session
 
 class Category(models.Model):
     name = models.CharField(max_length=255 ,unique=True)
-
-  
 
     def __str__(self) -> str:
         return self.name
@@ -25,6 +23,8 @@ class Product(models.Model):
     #slug = models.SlugField(unique=True, blank=True)  # Auto-generate slug from title
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2)  # Consider using DecimalField for currency
+    #promotion= models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(99)] ,null=True)
+    promotion_price= models.DecimalField(max_digits=8, decimal_places=2 ,null=True )  # Consider using DecimalField for currency
     #condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, blank=True, null=True)
     image = models.ImageField( blank=True, null=True)  # Define image upload path
     featured = models.BooleanField(default=False)
@@ -40,6 +40,16 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    def get_discount(self) -> int:
+        res= 100 - self.promotion_price *100 /self.price
+        return (res*10 //1)/10 #to keep only 2 decimals after the point
+    
+    def is_discounted(self):
+        if self.promotion_price == None :return False
+        if self.promotion_price == self.price :return False
+        else :return True
+
 
 
 
