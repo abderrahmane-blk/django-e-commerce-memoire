@@ -15,6 +15,15 @@ urlpatterns = [
     path('cart/less/<int:pid>' ,less_of,name='less of'),
     path('cart/more/<int:pid>' ,more_of,name='more of'),
 
+    # the comparer routes
+    path('comparer/',comparer , name='comparer'),
+    path('comparer/add/<int:pid>' ,add_comparer_item,name='add to comparer'),
+    path('comparer/del/<str:pid>' ,del_comparer_item,name='del from comparer'),
+
+
+
+
+
 # implementing the front end
 
     path('' ,app_main ,name='the main' ),

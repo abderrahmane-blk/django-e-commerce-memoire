@@ -99,7 +99,6 @@ def main_view(request):
 
 
 
-
 # cart with items
 
 
@@ -123,8 +122,6 @@ def view_cart_with_items(request):
     # print('-----3-----')
 
     return render(request ,'cart_items.html' ,{'cart':cart ,'cart_items':cart_items })
-
-
 
 
 def add_cart_item(request ,pid):
@@ -167,7 +164,8 @@ def add_cart_item(request ,pid):
     items_in_cart =cart.cart_item_set.count() 
     print(items_in_cart)
 
-    return redirect(view_cart_with_items)
+    #return redirect(view_cart_with_items)
+    return redirect(reverse('cart')) 
 
     """later the return should be changed to this
         return JsonResponse({
@@ -179,8 +177,6 @@ def add_cart_item(request ,pid):
 
 
 #prblem here ^^^^^ fix it
-
-
 
 
 
@@ -292,9 +288,98 @@ def del_cart_item(request,pid):
     return JsonResponse({'message':'deleted'})
 
 
+# ___________________  Comparer  _____________________
+
+def comparer(request):
+    
+    if not request.session.session_key:
+        request.session.create()
+    session= request.session.session_key
+
+    comparer = Comparer.objects.filter(session=session).first()
+    if comparer is None:
+        comparer = Comparer.objects.create(session_id=session)  
+
+    products_in_comparer =comparer.comparer_product_set.select_related('product').all()
 
 
-# implementing the front end
+    return render(request ,'comparer.html',{'comparer':comparer,'products_in_comparer':products_in_comparer})
+
+
+
+def add_comparer_item(request ,pid):
+    
+    # print('-----add1-----')
+
+    if not request.session.session_key:
+        request.session.create()
+    session= request.session.session_key
+
+    print('-----sessioned-----')
+
+    comparer = Comparer.objects.filter(session=session).first()
+    if comparer is None:
+        comparer = Comparer.objects.create(session_id=session)  
+        """note : here we used the parameter session_id which is not in our cart model ,this means we made a session and then returned the session instance here"""
+    product_to_add =Product.objects.filter(pk=pid).first()
+    print('-----2-----')
+
+
+    
+    if product_to_add is None:
+        return JsonResponse({
+            'message':'this product does not exist anymore',
+        }) 
+    
+    if Comparer_product.objects.filter(comparer=comparer,product=product_to_add):
+        items_in_comparer =comparer.comparer_product_set.count() 
+        return JsonResponse({
+            'message':'already in comparer',
+            'items_count':items_in_comparer,
+        })
+
+    Comparer_product.objects.create(
+        comparer=comparer,
+        product=product_to_add
+    )
+    print('-----added-----')
+
+    items_in_comparer =comparer.comparer_product_set.count() 
+    print('we have in  the comparer ::: '+str(items_in_comparer))
+
+    return redirect(reverse('comparer'))
+
+    """later the return should be changed to this
+        return JsonResponse({
+                'message':'added successfully',
+                'items_count':items_in_comparer,
+            }) 
+    """
+
+
+
+def del_comparer_item(request,pid):
+    
+    if not request.session.session_key:
+        request.session.create()
+    session= request.session.session_key
+
+    comparer = Comparer.objects.filter(session=session).last()
+    if comparer is None:
+        return JsonResponse({'hi':'there'})
+    product =Product.objects.filter(pk=pid).first()
+    product_item_to_del=Comparer_product.objects.filter(comparer=comparer,product=product).first()
+    product_item_to_del.delete()
+
+    return JsonResponse({'message':'deleted'})
+
+# __________________________________________
+
+
+
+
+
+# ________________________ implementing the front end _________________________
 
 def app_main(request):
 
@@ -306,7 +391,6 @@ def app_main(request):
 
 
     return render(request,'index.html',{'categories':categories , 'products': products})
-
 
 
 def product_details(request , id):

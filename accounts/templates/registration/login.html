@@ -40,6 +40,7 @@
               <p>We are happy to have you back.</p>
             </div>
 
+
             <form method="post">
                 {% comment %} 
                 <div class="input-group mb-3">
@@ -49,9 +50,10 @@
                   <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" />
                 </div> {% endcomment %}
                 {% csrf_token %}
-                {{form.as_p}}
+                {% include "registration/login form.html" with form=form %}
 
 
+              {% comment %} 
                 <div class="input-group mb-5 d-flex justify-content-between">
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="formCheck" />
@@ -63,18 +65,18 @@
                 </div>
                 <div class="input-group mb-3">
                   <button class="btn btn-lg btn-primary w-100 fs-6">Login</button>
-                </div>
+                </div> {% endcomment %}
 
-          </form>
+            </form>
 
 
             <div class="input-group mb-3">
-              <button class="btn btn-lg btn-light w-100 fs-6">
+              {% comment %} <button class="btn btn-lg btn-light w-100 fs-6">
                 <img src="{% static "css/for accounts app/assets/google.png" %}" style="width: 20px" class="me-2" /><small>Sign In with Google</small>
-              </button>
+              </button> {% endcomment %}
             </div>
             <div class="row">
-              <small>Don't have account? <a href="singup.html">Sign Up</a></small>
+              <small>Don't have account? <a href="{% url "new-customer" %}">Sign Up</a></small>
             </div>
           </div>
         </div>

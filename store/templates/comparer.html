@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>comparer</title>
+</head>
+<body>
+
+    <h1>the comparer</h1>
+
+    <h3>items in comparer</h3>
+    <ul>
+        {% for i in products_in_comparer %}
+        <li id="{{i.product.id}}">{{i.product.name}}    {{i.product.price}}  <a href="{% url "del from comparer" i.product.id%}"">del from comparer</a></li>
+        {% endfor %}
+
+    </ul>
+    
+</body>
+</html>

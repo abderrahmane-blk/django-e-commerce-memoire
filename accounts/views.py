@@ -68,6 +68,11 @@ def register_vendor(request):
 
 
 
+def register_customer(request):
+
+
+    return render(request ,'registration/register_customer_test.html')
+
 
 
 

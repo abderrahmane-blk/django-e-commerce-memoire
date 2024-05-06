@@ -11,7 +11,7 @@ class Customer_infoAdmin(admin.ModelAdmin):
 
 @admin.register(Vendor_info)
 class Vendor_infoAdmin(admin.ModelAdmin):
-    list_display=['id','user','store','vendor_specific_property' ,'store_deposit_account' ]
+    list_display=['id','user','bio','vendor_specific_property'  ]
 
 
 
