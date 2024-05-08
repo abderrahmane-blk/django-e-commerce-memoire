@@ -27,7 +27,7 @@
         class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
         style="background: #103cbe">
         <div class="featured-image mb-3">
-          <img src="assets/1.png" class="img-fluid" style="width: 250px" />
+          <img src="" class="img-fluid" style="width: 250px" />
         </div>
         <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600">
           Join Us
@@ -44,14 +44,15 @@
         <div class="row align-items-center">
           <div class="header-text mb-4">
             <h2>Wellcome To Our <br />X-Commerce</h2>
-            <p>Become a vendor</p>
+            <p></p>
           </div>
 
           
-        <form method='post' action="{% url 'new-vendor'%}" method="post">
+        <form method='post' action="{% url 'new-customer'%}" >
             {%csrf_token%}
 
-                <p>{{error}}</p>
+                    
+                    <li class="list-group-item list-group-item-danger p-3 rounded">{{error}}</li>
 
                     {% for field in form %}
 
@@ -82,6 +83,8 @@
 
           <div class="row">
             <small>You have an Account? <a href="{% url "login" %}">Login</a></small>
+            <small>You want to became a vendor? <a href="{% url "new-vendor" %}">signup as a vendor</a></small>
+
           </div>
         </div>
       </div>

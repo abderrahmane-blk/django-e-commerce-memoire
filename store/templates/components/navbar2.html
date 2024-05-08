@@ -30,8 +30,10 @@
 
             <button class="action-btn">
               <a href="{% url "cart" %}">
-                <i class="bi bi-cart"></i>
-                <span class="count">0</span>
+                
+                <ion-icon name="cart-outline"></ion-icon>
+
+                {% comment %} <span class="count">0</span> {% endcomment %}
               </a>
             </button>
 
@@ -42,11 +44,11 @@
                 </a>
               </button>
             {% endif %}
-
+{% comment %} 
             <button class="action-btn">
               <a href=""></a>
               <i class="bi bi-list"></i>
-            </button>
+            </button> {% endcomment %}
           </div>
         </div>
       <!-- </div> -->

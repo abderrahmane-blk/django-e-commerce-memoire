@@ -10,6 +10,20 @@ body{
 .right-box{
     padding: 40px 30px 40px 40px;
 }
+
+/* try */
+.right-box{
+    padding: 0px;
+}
+.right-box img{
+    object-fit: fill;
+}
+/* 
+.image_b{
+    background-image: {%static "css/for accounts app/assets/390.jpeg"%};
+} */
+
+
 /*------------ Custom Placeholder ------------*/
 ::placeholder{
     font-size: 16px;

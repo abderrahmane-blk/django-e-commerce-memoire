@@ -5,12 +5,13 @@ from .models import *
 
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+from accounts.views import timer
 
 
 
 
 
-
+@timer
 def main_view(request):
 
     products= Product.objects.all()
@@ -101,7 +102,7 @@ def main_view(request):
 
 # cart with items
 
-
+@timer
 def view_cart_with_items(request):
 
     print('-----1-----')
@@ -123,7 +124,7 @@ def view_cart_with_items(request):
 
     return render(request ,'cart_items.html' ,{'cart':cart ,'cart_items':cart_items })
 
-
+@timer
 def add_cart_item(request ,pid):
     
     # print('-----add1-----')
@@ -179,7 +180,7 @@ def add_cart_item(request ,pid):
 #prblem here ^^^^^ fix it
 
 
-
+@timer
 def more_of(request,pid):
     """this function adds 1 more to the quantity of a cart item"""
 
@@ -223,7 +224,7 @@ def more_of(request,pid):
     """
 
 
-
+@timer
 def less_of(request,pid):
     """this function substracts 1 from the quantity of a cart item  :if reached 0 -> item is deleted"""
 
@@ -270,7 +271,7 @@ def less_of(request,pid):
             return JsonResponse({})
     """
 
-
+@timer
 def del_cart_item(request,pid):
     
     if not request.session.session_key:
@@ -289,7 +290,7 @@ def del_cart_item(request,pid):
 
 
 # ___________________  Comparer  _____________________
-
+@timer
 def comparer(request):
     
     if not request.session.session_key:
@@ -306,7 +307,7 @@ def comparer(request):
     return render(request ,'comparer.html',{'comparer':comparer,'products_in_comparer':products_in_comparer})
 
 
-
+@timer
 def add_comparer_item(request ,pid):
     
     # print('-----add1-----')
@@ -357,7 +358,7 @@ def add_comparer_item(request ,pid):
     """
 
 
-
+@timer
 def del_comparer_item(request,pid):
     
     if not request.session.session_key:
@@ -380,7 +381,7 @@ def del_comparer_item(request,pid):
 
 
 # ________________________ implementing the front end _________________________
-
+@timer
 def app_main(request):
 
     categories = Category.objects.all()
@@ -392,7 +393,7 @@ def app_main(request):
 
     return render(request,'index.html',{'categories':categories , 'products': products})
 
-
+@timer
 def product_details(request , id):
     product =Product.objects.filter(pk=id).first()
     print(product)
@@ -403,7 +404,7 @@ def product_details(request , id):
 
 
 # ______________  all about the dashboard  _______________
-
+@timer
 @login_required
 def dashboard(request):
     user = request.user
@@ -412,35 +413,41 @@ def dashboard(request):
     return render(request,'dashboard/pages/dashboard.html')
 
 
-
+@timer
 def dashboard_account(request):
     user = request.user
 
     return render(request,'dashboard/pages/account.html')
 
 
-
+@timer
 def dashboard_category(request):
     user = request.user
+    categories =Category.objects.all()
 
-    return render(request,'dashboard/pages/category.html')
+    return render(request,'dashboard/pages/category.html' ,{'categories':categories})
 
-
+@timer
 def dashboard_products(request):
     user = request.user
+    store =Store.objects.filter(vendor=user.id).first()
+    vendor_products =Product.objects.filter(store=store.id).all()
 
-    return render(request,'dashboard/pages/products.html')
+    return render(request,'dashboard/pages/products.html' ,{'vendor_products':vendor_products})
 
+@timer
 def dashboard_sellesdata(request):
     user = request.user
 
     return render(request,'dashboard/pages/sellesdata.html')
 
+@timer
 def dashboard_settings(request):
     user = request.user
 
     return render(request,'dashboard/pages/settings.html')
 
+@timer
 def dashboard_users(request):
     user = request.user
     users =User.objects.all()

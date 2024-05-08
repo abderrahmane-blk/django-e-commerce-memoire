@@ -37,7 +37,6 @@
           </li>
 
 
-
           <li class="nav">
             <a href="{% url "dashboard products" %}">
               <span class="icon"><ion-icon name="cube-outline"></ion-icon></span>
@@ -60,7 +59,7 @@
           </li>
 
 
-          {% if  request.user.is_superuser %}
+          {% if not request.user.is_superuser %}
           <li class="nav">
             <a href="{% url "dashboard users" %}">
               <span class="icon">
@@ -70,12 +69,13 @@
             </a>
           </li>
 
-          <li class="nav">
-            <a href="{% url "dashboard category" %}">
-              <span class="icon"><ion-icon name="apps-outline"></ion-icon></span>
-              <span class="title">Category</span>
-            </a>
-          </li>
+
+              <li class="nav">
+                <a href="{% url "dashboard category" %}">
+                  <span class="icon"><ion-icon name="apps-outline"></ion-icon></span>
+                  <span class="title">Category</span>
+                </a>
+              </li>
 
           
           {% endif %}
@@ -94,14 +94,20 @@
             
             {% comment %} to be worked on  {% endcomment %}
 
-
-              <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <input type="submit">
-                  <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-                  <span class="title">Singout</span>
-              </input>
+            <form method="post" action="{% url 'logout' %}" class="link-style">  
+              {% csrf_token %}
+              <button type="" class="button">  
+                <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                <span class="title">Signout</span>
+              </button>
             </form>
+
+            
+
+            <a href="" type="submit">
+                  <span class="icon "><ion-icon name="log-out-outline"></ion-icon></span>
+                  <span class="title">Singout</span>
+              </a>
           
            
           </li>

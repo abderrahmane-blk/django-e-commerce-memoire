@@ -14,7 +14,6 @@ class Vendor_info(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE)
 
     bio = models.CharField(max_length = 255 ,null=True ,default=None)
-    vendor_specific_property = models.CharField(max_length=100)
     #user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES , default='vendor')
 
     class meta:
@@ -27,10 +26,7 @@ class Vendor_info(models.Model):
 class Customer_info(models.Model):
 
     user = models.OneToOneField(User , on_delete=models.CASCADE ,null=True)
-
-    customer_specific_property = models.CharField(max_length=100)
     lives_in = models.CharField(max_length=50 ,default ='Algeria')
-    #user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES , default='customer')
 
     class meta:
         verbose_name ='Customer'

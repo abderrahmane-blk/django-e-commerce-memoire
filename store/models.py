@@ -19,7 +19,7 @@ class Category(models.Model):
 class Store(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    store_name = models.CharField( max_length=512 )
+    store_name = models.CharField( max_length=512 ,null=True)
     location = models.CharField(max_length=5000,null=True)
     slogan = models.CharField(max_length=2048 , null =True)
     logo = models.ImageField( blank=True, null=True ,upload_to='stores_images')
@@ -45,7 +45,7 @@ class Product(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
-    owner = models.ForeignKey(Vendor_info, related_name='products', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='products', on_delete=models.CASCADE)
     store = models.ForeignKey(Store ,on_delete=models.CASCADE   ,null=True)#delete the null later
 
 
