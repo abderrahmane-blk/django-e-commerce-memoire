@@ -20,9 +20,6 @@ class StoreAdmin(admin.ModelAdmin):
     list_display=['id', 'store_name' ,'location' ,'deposit_account']
 
 
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display=['id', 'total' ,'created_on','customer']
     
 
 @admin.register(Cart)

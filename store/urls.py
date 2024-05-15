@@ -19,6 +19,8 @@ urlpatterns = [
     path('comparer/',comparer , name='comparer'),
     path('comparer/add/<int:pid>' ,add_comparer_item,name='add to comparer'),
     path('comparer/del/<str:pid>' ,del_comparer_item,name='del from comparer'),
+    path('filter/' ,filter_page__try,name='filter try'),
+
 
 
 

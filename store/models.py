@@ -64,6 +64,14 @@ class Product(models.Model):
         if self.promotion_price == None or self.promotion_price == self.price :return False
         else :return True
 
+    def get_price(self):
+        if self.promotion_price !=0 or self.promotion_price != None:
+            return self.promotion_price
+        else:
+            return self.price
+        
+
+
 
 
 
@@ -99,15 +107,6 @@ class Comparer_product(models.Model):
 
 
 
-class Order(models.Model):
-    total = models.DecimalField(max_digits=6, decimal_places=2)
-    
-    created_on = models.DateTimeField(auto_now_add=True)
-
-    customer = models.ForeignKey(User ,on_delete=models.SET_NULL, null=True) #may be it has to be changed to PROTECT , but that will do problems deleting the users from the database
-
-    def __str__(self) -> str:
-        return self.id
 
 
 

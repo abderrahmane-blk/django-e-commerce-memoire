@@ -105,7 +105,7 @@ def main_view(request):
 @timer
 def view_cart_with_items(request):
 
-    print('-----1-----')
+    # print('-----1-----')
 
 
     if not request.session.session_key:
@@ -121,8 +121,12 @@ def view_cart_with_items(request):
     cart_items =cart.cart_item_set.select_related('product').all()
 
     # print('-----3-----')
+    the_total = 0
+    for item in cart_items:
+        the_total =the_total +(item.product.get_price() *item.quantity)
 
-    return render(request ,'cart_items.html' ,{'cart':cart ,'cart_items':cart_items })
+
+    return render(request ,'cart_items.html' ,{'cart':cart ,'cart_items':cart_items,'total':the_total })
 
 @timer
 def add_cart_item(request ,pid):
@@ -454,3 +458,9 @@ def dashboard_users(request):
 
     return render(request,'dashboard/pages/users.html' ,{'users':users})
 
+
+
+
+
+def filter_page__try(request):
+    return render(request,'filter_page.html')

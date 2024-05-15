@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path,include
 from accounts import urls as account_urls
 from store import urls as store_urls
+from finance import urls as finance_urls
+
 #for media
 from django.conf.urls.static import static
 from .settings import MEDIA_ROOT,MEDIA_URL
@@ -27,6 +29,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/' ,include(account_urls)),
     path('',include(store_urls)),
+    path('finance/' ,include(finance_urls)),
+
 
 
 ]+static(MEDIA_URL,document_root=MEDIA_ROOT)

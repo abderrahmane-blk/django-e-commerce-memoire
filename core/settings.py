@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'paypal.standard.ipn',
     'accounts',
     'store',
+    'finance',
     
 ]
 
@@ -142,3 +144,14 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database backend
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL='login-test'
 LOGOUT_REDIRECT_URL='login-test'
+
+
+PAYPAL_RECEIVER_EMAIL ='memoireUS@business.example.com'     #here the money goes ; then we send to each vendor his money after he accomplishes his work
+
+PAYPAL_TEST =True
+PAYPAL_EMAIL ='memoireUS@business.example.com'     #here the money goes ; then we send to each vendor his money after he accomplishes his work
+
+# chargili
+CHARGILY_KEY = "test_pk_kBHjwoMaV8CUb1TrA9gQIcbIF8QLsaeG8QKBkcNQ"
+CHARGILY_SECRET = "test_sk_H1OYCPmSsKac9gp1gw2y5Uqp4ZVpvIA6TXvn44R1"
+CHARGILY_URL = "https://pay.chargily.net/test/api/v2/"

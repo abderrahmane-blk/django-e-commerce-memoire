@@ -19,10 +19,6 @@
 
 <style>
 
-    .body-bg{
-        background-color: rgb(244, 247, 248);
-    }
-    
 
     
 
@@ -76,8 +72,8 @@
 <!-- the total -->
 
 <div class="container total" >
-    <h2>Total : 55$</h2>
-    <a href="" class="btn btn-success buy-btn" >buy</a>
+    <h2>Total  : {{total}} DA</h2>
+    <a href="{% url "checkout" %}" target="blank" class="btn btn-success buy-btn" >buy</a>
 </div>
 
 
@@ -85,8 +81,19 @@
 
 
 
+
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/notify.min.js' %}"></script>
 
+<script>
+    alert('hi');
+  $(document).ready(function() {
+    $("#show-notification").click(function() {
+      $.notify("This is a simple notification!", "info");
+    });
+  });
+</script>
 
 </body>
