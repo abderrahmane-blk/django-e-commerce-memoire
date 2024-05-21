@@ -16,7 +16,7 @@
     <header>
       <!-- <div class="header-main"> -->
         <div class="header_body">
-          <a href="{% url "the main" %}" class="header-logo"> <span>X</span>Commerce </a>
+          <a href="{% url "the main" %}" class="header-logo"> <span>X</span>Ecommerce </a>
 
           <div class="header-search-container">
             <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
@@ -43,6 +43,12 @@
                   <ion-icon name="person-outline"></ion-icon>
                 </a>
               </button>
+            {% else %}
+            <button class="action-btn">
+              <a href="{% url "login" %}">
+                <ion-icon name="person-outline"></ion-icon>
+              </a>
+            </button>
             {% endif %}
 {% comment %} 
             <button class="action-btn">

@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'paypal.standard.ipn',
+    'chargily_epay_django',
+
+    'corsheaders',
+
     'accounts',
     'store',
     'finance',
@@ -53,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -155,3 +161,17 @@ PAYPAL_EMAIL ='memoireUS@business.example.com'     #here the money goes ; then w
 CHARGILY_KEY = "test_pk_kBHjwoMaV8CUb1TrA9gQIcbIF8QLsaeG8QKBkcNQ"
 CHARGILY_SECRET = "test_sk_H1OYCPmSsKac9gp1gw2y5Uqp4ZVpvIA6TXvn44R1"
 CHARGILY_URL = "https://pay.chargily.net/test/api/v2/"
+
+
+CHARGILY_API_KEY ="test_pk_kBHjwoMaV8CUb1TrA9gQIcbIF8QLsaeG8QKBkcNQ"
+CHARGILY_SECRET_KEY = "test_sk_H1OYCPmSsKac9gp1gw2y5Uqp4ZVpvIA6TXvn44R1"
+
+CHARGILY_FAKE_DOMAIN = "https://pay.chargily.net/test/api/v2"
+# CHARGILY_SITE
+
+
+# https://pay.chargily.net/test/api/v2
+
+
+
+CORS_ALLOW_ALL_ORIGINS = True

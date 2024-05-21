@@ -27,6 +27,7 @@ class Customer_info(models.Model):
 
     user = models.OneToOneField(User , on_delete=models.CASCADE ,null=True)
     lives_in = models.CharField(max_length=50 ,default ='Algeria')
+    image =models.ImageField( upload_to='users' ,null=True,blank=True, height_field=None, width_field=None, max_length=None)
 
     class meta:
         verbose_name ='Customer'

@@ -10,52 +10,45 @@
 {% block content %}
 
       <div class="table_container">
+        {% if request.user.is_superuser %}
         <div class="search-for-vendor">
-          <input type="text" name="" placeholder="Specific Vendor..." id="" />
-          <button class="">Serach</button>
+          <form action="" class="form-inline">
+            
+          <input type="text" name="vendor" value="{{request.GET.vendor}}" placeholder="Specific Vendor..." id="" />
+          <button onclick="this.form.submit()" class="">Serach</button>
+          </form>
         </div>
+
+        {% endif %}
+        
         <div class="table_body">
           <div class="selles-header">
-            <h2>All Selles</h2>
+            <h2>{{who}} Selles</h2>
           </div>
           <table id="myTable">
             <thead>
               <tr>
                 <td>Vendor</td>
                 <td>Cusotmer</td>
+                <td>item</td>
                 <td>Ammonut</td>
                 <td>Date</td>
               </tr>
             </thead>
 
             <tbody>
+              {% for order in orders %}
               <tr class="table_row">
-                <td class="">Vendor 1</td>
-                <td class="">Cusetomer 1</td>
-                <td class="">$1200</td>
-                <td class="">09/33/1999</td>
-                <td>
-                  <button class="btn delete_row yellowBtn">delete</button>
-                </td>
-              </tr>
-              <tr class="table_row">
-                <td class="">Vendor 4</td>
-                <td class="">Cusetomer 398</td>
-                <td class="">$1200</td>
-                <td class="">09/33/1999</td>
-                <td>
+                <td class="">{{order.store.vendor}}</td>
+                <td class="">{% if order.customer is None%}anonymous {% else %}{{order.customer}}{% endif %}</td>
+                <td class="">{{order.item}}</td>
+                <td class="">{{order.price_paid}} DA</td>
+                <td class="">{{order.created_on}}</td>
+                {% comment %} <td>
                   <button class="btn yellowBtn delete_row">delete</button>
-                </td>
+                </td> {% endcomment %}
               </tr>
-              <tr class="table_row">
-                <td class="">Vendor 2</td>
-                <td class="">Cusetomer 2</td>
-                <td class="">$1206</td>
-                <td class="">09/34/1999</td>
-                <td>
-                  <button class="btn yellowBtn delete_row">delete</button>
-                </td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>

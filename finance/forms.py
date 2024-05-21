@@ -24,7 +24,15 @@ class CustomPaypalPaymentForm(PayPalPaymentsForm):
 
 
 
+# _______________chargily
 
+from django.forms import ModelForm
+from .models import ChargilyPayment
+
+class PaymentForm(ModelForm):
+    class Meta:
+        model = ChargilyPayment
+        fields = ['client', 'client_email', 'amount', 'mode', 'comment']
 
 
 

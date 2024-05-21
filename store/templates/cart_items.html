@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static "css/navbar.css" %}">
 
 
+
 <style>
 
 
@@ -32,7 +33,7 @@
 
 
 <!-- the body -->
-<div class=" title text-center"><h1 class="text-success my-3">Cart</h1></div>
+<div class=" title text-center"><h1 style="font-size: 40px;font-weight: 600; color:#1e93ec;" class=" my-3">Cart</h1></div>
 
 
 <!-- where cards are -->
@@ -52,10 +53,10 @@
         </div>
         <div class="card__body">
             <h2 class="card__body__item">{{product.product.name}} </h2>
-            <h4  class="card__body__item"> price: {{product.product.price}} DA</h4>
+            <h4  class="card__body__item"> price: {{product.product.get_price}} DA</h4>
         </div>
         <div class="card__btns">
-            <a href="{% url 'more of' product.product.id%}" class="btn btn-outline-success"><i class="bi bi-plus " ></i></a>
+            <a href="{% url 'more of' product.product.id%}"  class="btn btn-outline-primary" ><i class="bi bi-plus " ></i></a>
             <p>quantity: {{product.quantity}}</p>
             <a href="{% url 'less of' product.product.id%}" class="btn btn-outline-danger"><i class="bi bi-dash " ></i></a>
             <a href="{% url 'del from cart' product.product.id%}" class="btn btn-danger"><i class="bi bi-trash " ></i></a>
@@ -72,9 +73,15 @@
 <!-- the total -->
 
 <div class="container total" >
-    <h2>Total  : {{total}} DA</h2>
-    <a href="{% url "checkout" %}" target="blank" class="btn btn-success buy-btn" >buy</a>
+    <div>
+        <h2 style="font-size: 25px;font-weight:bolder; display:inline-block;" >Total  :  </h2><span style="display:inline; font-size: 20px">{{total}} DA</span>
+    </div>
+    <a href="{% url "checkout" %}" 
+    target="blank" 
+    style="background-color:#1e93ec;font-size: 20px;font-weight: 500; color:white;" 
+    class="btn buy-btn" >buy</a>
 </div>
+
 
 
 
@@ -88,7 +95,6 @@
 <script src="{% static 'js/notify.min.js' %}"></script>
 
 <script>
-    alert('hi');
   $(document).ready(function() {
     $("#show-notification").click(function() {
       $.notify("This is a simple notification!", "info");

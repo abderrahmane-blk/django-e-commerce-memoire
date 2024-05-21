@@ -474,6 +474,123 @@ header {
   border-radius: var(--border-radius-md);
 }
 
+
+
+.header-area {
+  height: 80px;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo a {
+  font-size: 30px;
+  font-family: "Open Sans", sans-serif;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 50px;
+}
+
+#open-btn {
+  width: 80px;
+  position: fixed;
+  color: white;
+  height: 80px;
+  background: var(--blue);
+  align-items: centh;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  bottom: 40px;
+  right: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+}
+#open-btn img {
+  width: 60px;
+  height: 98px;
+}
+
+.offcanvas-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: var(--blue);
+  width: 30vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  transform: translateX(100%);
+  transition: all 0.4s ease;
+  overflow-y: scroll;
+  padding: 45px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 101;
+}
+.offcanvas-menu h1 {
+  color: white;
+}
+
+.offcanvas-menu.active {
+  transform: translateX(0);
+}
+
+.offcanvas-menu .close-btn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  font-size: 30px;
+  color: #fff;
+}
+#menu_content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+.compare_card {
+  height: 110px;
+  width: 30rem;
+  border: 1px solid rgba(87, 87, 87, 0.578);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+.compare_card img {
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+}
+.name,
+.price {
+  color: #fff;
+  font-size: larger;
+  font-weight: bolder;
+}
+.delete_btn {
+  color: red;
+  font-size: xx-large;
+  cursor: pointer;
+}
+
+
+
+
+
+
 /**
  * responsive larger than 480px screen
  */
@@ -640,6 +757,13 @@ header {
     min-width: 300px;
   }
 }
+
+
+
+
+
+
+
 
 /**
  * responsive larger than 768px screen

@@ -7,7 +7,7 @@
    <!-- ======================= Cards ================== -->
    <div class="cardBox">
     <a href="">
-      <div class="card">
+      {% comment %} <div class="card">
         <div>
           <div class="numbers">1,504</div>
           <div class="cardName">Daily Views</div>
@@ -16,11 +16,11 @@
           <ion-icon name="eye-outline"></ion-icon>
         </div>
       </div>
-    </a>
+    </a> {% endcomment %}
     <a href="">
       <div class="card">
         <div>
-          <div class="numbers">80</div>
+          <div class="numbers">{{sales_number}}</div>
           <div class="cardName">Sales</div>
         </div>
         <div class="iconBx">
@@ -29,7 +29,7 @@
       </div>
     </a>
     <a href="">
-      <div class="card">
+      {% comment %} <div class="card">
         <div>
           <div class="numbers">284</div>
           <div class="cardName">Comments</div>
@@ -37,12 +37,12 @@
         <div class="iconBx">
           <ion-icon name="chatbubbles-outline"></ion-icon>
         </div>
-      </div>
+      </div> {% endcomment %}
     </a>
     <a href="">
       <div class="card">
         <div>
-          <div class="numbers">$7,842</div>
+          <div class="numbers">{{total_paid}}.00 DA</div>
           <div class="cardName">Earning</div>
         </div>
         <div class="iconBx">

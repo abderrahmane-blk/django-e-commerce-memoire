@@ -16,6 +16,8 @@ from .forms import CustomPaypalPaymentForm
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
 
+# from chargily_epay_django import 
+
 
 
 # Create your views here.
@@ -78,9 +80,10 @@ def payment_success(request):
     for item in cart_items:
 
         new_order = Order.objects.create(
+            item=item.product,
             price_paid = item.product.get_price() *item.quantity,
             quantity =item.quantity,
-            # customer =   to be added if the customer is logged in 
+            customer = this_transaction.customer,
             store =item.product.store,
             the_transaction=this_transaction ,
 
@@ -112,7 +115,6 @@ def payment_failed(request):
 @timer
 def checkout_paypal(request):
     if request.session.session_key == None:
-        print('no session')
         return redirect(request,'')
     sessionKey = request.session.session_key
 
@@ -123,16 +125,23 @@ def checkout_paypal(request):
     total_price =the_total(sessionKey)
     total_price_in_usd =to_usd(total_price)
 
-    #we make a new transaction
-    new_transaction =Transaction.objects.create(
+    if request.user.is_authenticated:
+        # the_user =User.objects.filter(username =request.user).first()
+        
+        new_transaction =Transaction.objects.create(
         cart=cart,
-        total = total_price
-        #customer =     #it should be set if the user is authenticated
-    )
+        total = total_price,
+        customer =request.user,)
+    else:
+        new_transaction =Transaction.objects.create(
+        cart=cart,
+        total = total_price,
+        )
+
+
+    #we make a new transaction
+    
     new_transaction.save()
-
-
-
 
 
     host = request.get_host()
@@ -172,7 +181,51 @@ def paypal_webhook(sender ,**kwargs):
 
 
 
+
+
+
+
+
+
+
 # _________chargili__________
 
 def checkout_chargili(request):
     pass
+
+
+
+
+
+from chargily_epay_django.views import (
+    CreatePaymentView ,
+    PaymentConfirmationView,
+    PaymentObjectDoneView ,
+    FakePaymentView
+    
+    )
+from .forms import PaymentForm
+
+
+class CreatePayment(CreatePaymentView):
+    template_name: str = "payment/payment-template.html"
+    form_class = PaymentForm
+    template_name ="chargily.html"
+
+
+class PaymentConfirmation(PaymentConfirmationView):
+    model = PaymentForm
+
+
+class PaymentStatus(PaymentObjectDoneView):
+    template_name: str = "payment/payment-status.html"
+    model = PaymentForm
+
+
+class FakePayment(FakePaymentView):
+    model = PaymentForm
+
+
+
+def chargilyWebhook(request):
+    return render(request,"chargily/payment-success.html")

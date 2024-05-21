@@ -13,6 +13,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_display=['id', 'name' ,'small_description','price', 'category','image','featured','quantity','owner']
     list_editable=['name' ,'featured' ,'category']
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display=['id', 'content' ,'commentor' ,'product']
+    
+
+
+
 
 
 @admin.register(Store)
@@ -24,4 +31,4 @@ class StoreAdmin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display=['id', 'items' ,'session']
+    list_display=['id' ,'session']

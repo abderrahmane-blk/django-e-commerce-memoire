@@ -17,7 +17,7 @@
         <table id="myTable">
           <thead>
             <tr>
-              <td></td>
+              <td>id</td>
               <td>Name</td>
               <td>Type</td>
             </tr>
@@ -26,11 +26,12 @@
           <tbody>
             {% for user in users %}
                 <tr class="table_row">
-                  <td width="60px">
+                  {% comment %} <td width="60px">
                     <div class="imgBx"><img src="{% static "dashboard assets/images/user.jpg" %}" alt="" /></div>
-                  </td>
-                  <td class="">Omar Abdo</td>
-                  <td class="">Vendor</td>
+                  </td> {% endcomment %}
+                  <td class="">{{user.id}}</td>
+                  <td class="">{{user.username}}</td>
+                  <td class="">{{user.type}}</td>
                   <td>
                     <button class="btn ban_btn yellowBtn">Ban</button>
                   </td>

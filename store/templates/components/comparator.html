@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Off Canvas Menu</title>
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link rel="stylesheet" href="{% static "css/comparator.css" %}" />
+    {% comment %} <link rel="stylesheet" href="{% static "css/style.css" %}" /> {% endcomment %}
+
+  </head>
+  <body>
+    {% comment %} <a class="open-btn" id="open-btn" href="#" style="z-index:100;">
+      <img width='' src="{% static "assets/compa.jpeg" %}" alt="" />
+    </a>
+    <div class="offcanvas-menu">
+      <a class="close-btn" href="#">
+        <i class="ion-close-round"></i>
+      </a>
+      <h1>Compaire Products</h1>
+      <div class="menu_content">
+        <div class="card">
+          <img src="one.png" alt="" />
+          <div class="name">Product 1</div>
+          <div class="price">$294.00</div>
+          <div class="delete_btn">
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="one.png" alt="" />
+          <div class="name">Product 2</div>
+          <div class="price">394.00</div>
+          <div class="delete_btn">
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="card">
+          <img src="one.png" alt="" />
+          <div class="name">Product 3</div>
+          <div class="price">$930.00</div>
+          <div class="delete_btn">
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="card">
+          <img src="one.png" alt="" />
+          <div class="name">Product 4</div>
+          <div class="price">$920.00</div>
+          <div class="delete_btn">
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="card">
+          <img src="one.png" alt="" />
+          <div class="name">Product 5</div>
+          <div class="price">$183.00</div>
+          <div class="delete_btn">
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div> {% endcomment %}
+
+
+
+    <a style="border-radius:50px; overflow:hidden;" id="open-btn" href="#">
+      <img src="{% static "assets/compa.jpeg" %}" alt="" />
+    </a>
+    <div class="offcanvas-menu">
+      <a class="close-btn" href="#">
+        <i class="ion-close-round"></i>
+      </a>
+      <h1>Compaire Products</h1>
+      <div class="menu_content">
+        
+        {% for item in comparator_items%}
+          <div class="compare_card">
+            <img src="{{item.product.image.url}}" alt="" />
+            <div class="name">{{item.product.name}}</div>
+            <div class="price">{{item.product.get_price}}</div>
+            <div class="fillter_btn">
+              <ion-icon name="trophy-outline" ></ion-icon>
+              <span class="tooltiptext">search for competetive products</span>
+            </div>
+            <div class="delete_btn" onclick="delCompaItem({{item.id}})">
+              <ion-icon name="trash-outline" ></ion-icon>
+            </div>
+          </div>
+        {% endfor %}
+
+
+      </div>
+    </div>
+
+
+    <script src="{% static "js/comparator.js" %}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

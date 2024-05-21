@@ -23,11 +23,15 @@
     <link
       rel="https://gistcdn.githack.com/mfd/7c7a915eb31474cc8c6a65066a4c4dc3/raw/f0f2fb94c21dea904812a53e0eb6cf0bc87f3754/GTWalsheimPro.css"
     />
+
     <link rel="website icon" href="{% static "assets/logo.png" %}" type="png" />
 
     <title>x commerce</title>
     <link rel="stylesheet" href="{% static "css/last style.css" %}" />
     <link rel="stylesheet" href="{% static "css/navbar.css" %}" />
+
+    
+
 
   </head>
 
@@ -134,6 +138,9 @@
 
 
 
+    {% include "components/comparator.html" with comparator_items=comparator_items %}
+    <script src="{% static "js/dashboard/dashboard2.js" %}"></script>
+    
 
 
     <script src="https://cdn.lordicon.com/lordicon.js"></script>

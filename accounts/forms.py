@@ -47,10 +47,6 @@ class New_customer_form(forms.Form):
 
 
 
-
-
-
-
 # down here is useless
 
 
@@ -60,3 +56,29 @@ login_form_password_attrs ={'':''}
 class login_form(forms.Form):
     email = forms.EmailField( required=True ,widget=forms.TextInput(attrs=login_form_email_attrs))
     password = forms.EmailField(required=True ,widget=forms.PasswordInput(attrs=login_form_password_attrs)) 
+
+
+
+
+
+class Pofile_Form(forms.Form):
+    the_first_name = forms.CharField(max_length=255,required=False, )
+    the_last_name = forms.CharField(max_length=255, required=False,)
+    the_username = forms.CharField(max_length=255 ,required=False, )
+    the_email = forms.EmailField(required=True, )
+
+    new_password1 = forms.CharField(max_length =255 ,required =False ,)
+    new_password2 = forms.CharField(max_length =255 ,required =False ,)
+
+    where_lives = forms.CharField(max_length=255, required=False,)
+    the_bio = forms.CharField(max_length=2048, required=False,)
+
+class Pofile_Store_Form(forms.Form):
+    store_name = forms.CharField( max_length=512 ,required=False)
+    location = forms.CharField(max_length=5000,required=False)
+    slogan = forms.CharField(max_length=2048 , required =False)
+    logo = forms.ImageField(  required=False )
+    deposit_account = forms.CharField( max_length=512 ,required=False)
+
+class emailForm(forms.Form):
+    mail =forms.EmailField(required=True)

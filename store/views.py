@@ -4,13 +4,18 @@ from django.urls import reverse
 from .models import *
 
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-from accounts.views import timer
+    
+from django.views.decorators.csrf import csrf_exempt 
+from django.views.decorators.http import require_POST
+
+from accounts.views import timer,is_permitted
+
+from .forms import *
+from finance.models import Order
 
 
 
-
-
+#usseless
 @timer
 def main_view(request):
 
@@ -18,6 +23,36 @@ def main_view(request):
 
 
     return render(request ,'mainstore.html',{'products':products} )
+
+
+
+def the_comparator_items(request):
+    """this function returns the products in the comparator of the session , if no session or no comparer it makes them"""
+    if not request.session.session_key:
+        request.session.create()
+    session= request.session.session_key
+    
+    products_in_comparer =None
+
+    comparer = Comparer.objects.filter(session=session).first()
+    if comparer is None:
+        comparer = Comparer.objects.create(session_id=session)  
+
+    products_in_comparer =comparer.comparer_product_set.select_related('product').all()
+
+
+    return products_in_comparer
+
+
+@timer
+def del_comparer_item2(request,the_id):
+    print('starting' ,the_id)
+    print(request)
+    
+    product_item_to_del=Comparer_product.objects.filter(pk=the_id).first()
+    product_item_to_del.delete()
+
+    return JsonResponse({'message':'deleted'})
 
 
 # cart views
@@ -105,14 +140,9 @@ def main_view(request):
 @timer
 def view_cart_with_items(request):
 
-    # print('-----1-----')
-
-
     if not request.session.session_key:
         request.session.create()
     session= request.session.session_key
-    # print('-----2-----')
-
 
     cart = Cart.objects.filter(session=session).last()
     if cart is None:
@@ -120,11 +150,9 @@ def view_cart_with_items(request):
 
     cart_items =cart.cart_item_set.select_related('product').all()
 
-    # print('-----3-----')
     the_total = 0
     for item in cart_items:
         the_total =the_total +(item.product.get_price() *item.quantity)
-
 
     return render(request ,'cart_items.html' ,{'cart':cart ,'cart_items':cart_items,'total':the_total })
 
@@ -294,6 +322,7 @@ def del_cart_item(request,pid):
 
 
 # ___________________  Comparer  _____________________
+# the old version , now it is sent with the pages which requires it
 @timer
 def comparer(request):
     
@@ -311,6 +340,7 @@ def comparer(request):
     return render(request ,'comparer.html',{'comparer':comparer,'products_in_comparer':products_in_comparer})
 
 
+# still
 @timer
 def add_comparer_item(request ,pid):
     
@@ -388,33 +418,83 @@ def del_comparer_item(request,pid):
 @timer
 def app_main(request):
 
+    is_permitted(request)
+
     categories = Category.objects.all()
     products = Product.objects.all()
 
     # for i in all_products:
     #     print(i)
+    comparator_items =the_comparator_items(request)
 
-
-    return render(request,'index.html',{'categories':categories , 'products': products})
+    return render(request,'index.html',{'categories':categories , 'products': products,'comparator_items':comparator_items})
 
 @timer
 def product_details(request , id):
-    product =Product.objects.filter(pk=id).first()
-    print(product)
+    the_product =Product.objects.filter(pk=id).first()
+    comments =Comment.objects.filter(product=the_product).all()
 
-    return render(request ,'productPage.html' ,{'product':product})
+    comparator_items =the_comparator_items(request)
+
+    return render(request ,'productPage.html' ,{'product':the_product ,'comments':comments,'comparator_items':comparator_items})
+
+
+@timer
+def filter_page(request):
+    pass
+
+
+
+
+
+@csrf_exempt
+def add_comment(request ,product_id):
+    theCommentForm =request.POST 
+    product_commented =Product.objects.filter(pk=product_id).first()
+
+    try:
+        newComment =Comment.objects.create(content =theCommentForm['comment'] ,commentor=request.user ,product =product_commented)
+        newComment.save()
+
+    except:
+        print('something happened')
+    
+    return redirect(reverse('product' ,args=[product_id]))
+
+
+
+
+
+
 
 
 
 
 # ______________  all about the dashboard  _______________
+
+def threat(request):
+    return render(request ,'threat.html')
+
+
+
+
+
+
+
+
+
 @timer
 @login_required
 def dashboard(request):
-    user = request.user
+
+    from django.db.models import Sum,Count
+    sales= Order.objects.filter(store__vendor =request.user).aggregate(sales_number=Count('price_paid'))['sales_number']
+    earnings= Order.objects.filter(store__vendor =request.user).aggregate(total_sales=Sum('price_paid'))['total_sales']
+    # print(earnings)
+    # print(sales)
    
 
-    return render(request,'dashboard/pages/dashboard.html')
+    return render(request,'dashboard/pages/dashboard.html' ,{'sales_number':sales,'total_paid':earnings})
 
 
 @timer
@@ -424,6 +504,9 @@ def dashboard_account(request):
     return render(request,'dashboard/pages/account.html')
 
 
+
+
+# ____________dashboard CATEGORY____________
 @timer
 def dashboard_category(request):
     user = request.user
@@ -431,19 +514,105 @@ def dashboard_category(request):
 
     return render(request,'dashboard/pages/category.html' ,{'categories':categories})
 
+@csrf_exempt
+def delete_category(request,pk):
+
+    # if request.user.is_superuser:
+    if True:
+    
+        try:
+            cate =Category.objects.filter(pk=pk).first()
+            if cate == None:
+                print('category does not exist')
+                return JsonResponse({'message':'category does not exist'})
+
+            cate.delete()
+            print('deleted')
+            return JsonResponse({'message':'category deleted'})
+
+        except:
+            print('something occured')
+            return JsonResponse({'message':'not deleted'})
+        
+    else:
+        return redirect(reverse('threat'))
+
+
+@csrf_exempt
+@require_POST
+def add_category(request):
+    new_category_name =request.POST['new_category_name']
+
+    Category.objects.create(name=new_category_name).save()
+
+    return redirect(reverse('dashboard category'))
+
+
+
+@csrf_exempt  
+@require_POST
+def edit_category(request ,pk):
+    print(request.POST.get('new_name'))
+    # form = CategoryNameForm(initial={'new_name' :request.POST.get('new_name')})
+    # if form.is_valid():
+    #     new_name =form.cleaned_data['new_name']
+    #     print('----------')
+    #     print(new_name)
+    #     print('----------')
+    
+    new_name =request.POST.get('new_name')
+
+    if Category.objects.filter(name=new_name).first():
+        print('a category with this name already exists')
+        return JsonResponse({'message':'a category with this name already exists'})
+    else:
+        cate = Category.objects.filter(pk=pk).first()
+        cate.name =new_name
+        cate.save()
+        print('new name saved')
+        return JsonResponse({'message':'new name saved'})
+    
+
+
+
+
+
 @timer
 def dashboard_products(request):
     user = request.user
     store =Store.objects.filter(vendor=user.id).first()
-    vendor_products =Product.objects.filter(store=store.id).all()
+    print(store)
+    vendor_products =Product.objects.filter(store=store).all()
 
     return render(request,'dashboard/pages/products.html' ,{'vendor_products':vendor_products})
 
+
+# ____dashboard selles data
 @timer
 def dashboard_sellesdata(request):
-    user = request.user
+    who ='all'
+    if request.user.is_superuser:
+        filters ={}
+        vendor_name =request.GET.get('vendor',None)
+        if vendor_name:
+            who =''
+            vendor =User.objects.filter(username__icontains=vendor_name).all()
+            the_store =Store.objects.filter(vendor__in=vendor).first()
 
-    return render(request,'dashboard/pages/sellesdata.html')
+            filters['store']=the_store
+        
+        orders = Order.objects.filter(**filters).select_related('store','store__vendor').order_by('-created_on').all()
+
+    else:
+        the_store =Store.objects.filter(vendor=request.user).first()
+        orders = Order.objects.select_related('store','store__vendor').order_by('-created_on').filter(store=the_store).all()
+
+
+    return render(request,'dashboard/pages/sellesdata.html' ,{'orders':orders ,'who':who})
+
+
+
+
 
 @timer
 def dashboard_settings(request):
@@ -456,11 +625,39 @@ def dashboard_users(request):
     user = request.user
     users =User.objects.all()
 
+    def usertype(self):
+        if self.is_superuser:
+            return 'superuser'
+        elif True:
+            v =Vendor_info.objects.filter(user=self.pk).first()
+            if v is None:
+                pass
+            else: return 'vendor'
+        
+        return 'customer'
+
+    for user in users:
+        user.type = usertype(user)
+
+
+    
+
     return render(request,'dashboard/pages/users.html' ,{'users':users})
 
 
 
 
 
+
+
 def filter_page__try(request):
-    return render(request,'filter_page.html')
+    return render(request,'filtterPage.html')
+
+
+def try_compare(request):
+    return render(request,'components/comparator.html')
+
+def get_comparer_data(request):
+    co_items =Comparer_product.objects.filter('comparer__session'=='vigy63yssnksm4689yu5pigu2xvefcin').all()
+    print(co_items)
+    return JsonResponse({'message':None})

@@ -12,5 +12,13 @@ urlpatterns = [
     path('paypal/' ,include('paypal.standard.ipn.urls')),
 
 
+    # for chargily
+        path('chargily/' , CreatePayment.as_view()  ,name='try chargily'),
+        path('webhooked/' ,chargilyWebhook ,name='chargily webhook url')
+
+
+
+
+
 
 ]

@@ -41,6 +41,7 @@ class Product(models.Model):
     image = models.ImageField( blank=True, null=True)  # Define image upload path
     featured = models.BooleanField(default=False)
     quantity = models.IntegerField(default = 10)
+    for_sale =models.BooleanField(default=True)
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -80,7 +81,6 @@ class Product(models.Model):
 # about the cart
 
 class Cart(models.Model):
-    items = models.JSONField(default=dict)
     session = models.ForeignKey(Session,  on_delete=models.CASCADE)
 
 class Cart_item(models.Model):
@@ -105,6 +105,10 @@ class Comparer_product(models.Model):
 
 
 
+class Comment(models.Model):
+    content=models.CharField( max_length=3000)
+    commentor =models.ForeignKey(User,  on_delete=models.CASCADE)
+    product =models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
 

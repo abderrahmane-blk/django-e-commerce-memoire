@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap icnos cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- font awesome cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>show Category Page</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}" />
+    <link rel="stylesheet" href="{% static "css/FilterPage.css" %}" />
+  </head>
+  <body>
+    {% comment %} <header>
+      <div class="header_body">
+        <a href="index.html" class="header-logo"> <span>X</span>Ecommerce </a>
+        <div class="header-search-container">
+          <input type="search" name="search" class="search-field" placeholder="Search..." />
+          <button class="search-btn">
+            <ion-icon name="search-outline"></ion-icon>
+          </button>
+        </div>
+        <div class="header-user-actions">
+          <button class="action-btn">
+            <a href="card.html">
+              <ion-icon name="cart-outline"></ion-icon>
+              <!-- <span class="count">0</span> -->
+            </a>
+          </button>
+          <button class="action-btn">
+            <a href="dashboard/index.html">
+              <ion-icon name="person-outline"></ion-icon>
+            </a>
+          </button>
+        </div>
+        <button class="menu_btn">
+          <a href="" style="text-decoration: none; text-transform: none">
+            <ion-icon name="menu-outline"></ion-icon>
+          </a>
+        </button>
+      </div>
+    </header> {% endcomment %}
+
+    {% include "components/navbar2.html" %}
+
+
+    <section class="filtter_container">
+      <div class="sidebar">
+        <div class="filter">
+          <form action="">
+            <h3>Price Filtter</h3>
+
+            <input id="filtter_btn" type="submit" value="Filter" />
+
+            <div class="price_filter">
+              <div class="min">
+                <label for="min_price">Min</label>
+                <input type="number" name="" id="min_price" min="1" class="min" />
+              </div>
+              <div class="max">
+                <label for="max_price">Max</label>
+                <input type="number" name="" id="max_price " min="1" class="max" />
+              </div>
+            </div>
+            <h3>Category Filtter</h3>
+            <div id="btns"></div>
+          </form>
+        </div>
+      </div>
+      <div class="content">
+        <div class="header">
+          <p>Category Name</p>
+        </div>
+        <div id="root"></div>
+      </div>
+    </section>
+
+    <script src="{% static "js/filtter.js" %}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  </body>
+</html>

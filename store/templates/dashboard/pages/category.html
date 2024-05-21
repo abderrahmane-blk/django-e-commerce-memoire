@@ -8,38 +8,125 @@
 
 
 {% block content %}
+{% comment %} 
+  <script>
 
-
+    async function delete_category2(id){
+      console.log('wrking');
+      let cat_del_url=`{{ request.build_absolute_uri }}/del/${id}`;
+    
+      fetch(cat_del_url, {
+        method: 'GET'  // Replace with 'POST', 'PUT', or 'DELETE' if needed
+      })
+      .then(response => console.log('data');
+                      
+                      
+                      response.json();) // Parse the JSON response
+      .then(data => {
+        // Handle the fetched data (e.g., display, update UI)
+        console.log(data);
+        console.log(data['message'])
+        
+        alert(data['message']);
+      })
+      .catch(error => {
+        // Handle errors (e.g., display error message)
+        console.error('Error fetching data:', error);
+      });
+    
+    
+    }
+  </script> {% endcomment %}
 
     <div class="table_container">
       <div class="table_body">
         <div class="selles-header">
           <h2>categories</h2>
-          <a href="" class="btn">Add Product</a>
+
+          <form method='post' action="{% url "new category" %}">
+            <input type="text" name="new_category_name" placeholder="add Catogory Name">
+            <button onclick="this.form.submit()" >add Category</button>
+          </form>
+
+
         </div>
         <table id="myTable">
           <thead>
             <tr>
               <td>Name</td>
-              <td>Qunatity</td>
+              <td>edit</td>
+              <td>delete</td>
             </tr>
           </thead>
 
           <tbody>
-            <tr class="table_row">
-              <td class="">Category 1</td>
-              <td class="">22</td>
-              <td>
-                <button class="btn editBtn yellowBtn">Edit</button>
-              </td>
-              <td>
-                <button class="btn delete_row deleteBtn">delete</button>
-              </td>
-            </tr>
+            <div class="form_container">
+              <div class="form_title">Edit Category</div>
+
+              <form action="#" class="form-class">
+                <div class="product-details">
+                  <div class="form_input-box">
+                    <span class="details">Name</span>
+                    <input type="text" class="form_class" name="" placeholder="Enter Category Name" id="" required />
+                  </div>
+                </div>
+                <div class="form_button" >
+                  <input type="submit"  onclick="hiddeForm()" style="margin-right:6px;" value="edit" />
+                  <input type="submit"  onclick="hiddeForm()" value="cancel" />
+                </div>
+              </form>
+            </div>
+            
+                 {% comment %} {% for category in categories %}
+                  <tr class="table_row">
+                    <td class="">{{category.name}}</td>
+                    <!-- <td class="">22</td>  -->
+                    <td>
+                      <form method='post' action="{% url "edit category" category.id %}">
+                        <input type="text" name="new_name">
+                        <input class="btn btn-success" onclick="this.form.submit()" label="new name" >
+                        <input type="submit">
+                      </form>
+                      <!-- <input class="btn editBtn yellowBtn">Edit category name</input>  -->
+                    </td>
+                    <td>
+                      
+                      <button onclick="delete_category({{category.id}})" class="btn delete_row deleteBtn">delete category </button>
+
+                      
+                    </td>
+                  </tr>
+
+                {% endfor %}  {% endcomment %}
+
+
+            {% for category in categories %}
+              <tr class="table_row">
+                <td class="">{{category.name}}</td>
+                
+              
+                <td>
+                  <button class="btn editBtn yellowBtn"  onclick="showForm()">Edit</button>
+                  
+                </td>
+                <td>
+                  <button onclick="delete_category({{category.id}})" class="btn delete_row deleteBtn">delete</button>
+                </td>
+              </tr>
+            {% endfor %}
+
+
+
+
+
+
           </tbody>
         </table>
       </div>
     </div>
+
+    <script src="{% static "js/dashboard/dashboardmain.js" %}"></script>
+    <script src="{% static "js/dashboard/dashboard2.js" %}"></script>
 
 {% endblock content %}
 

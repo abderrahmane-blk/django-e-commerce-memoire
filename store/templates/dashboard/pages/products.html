@@ -14,7 +14,7 @@
         <div class="table_body">
           <div class="selles-header">
             <h2>Producs</h2>
-            <a href="" class="btn">Add Product</a>
+            <button >Add Producs</button>
           </div>
           <table id="myTable">
             <thead>
@@ -27,19 +27,21 @@
 
             <tbody>
 
-              {% for product in vendor_products %}
-              <tr class="table_row">
-                <td class="">{{product.name}}</td>
-                <td class="">{{product.price}} DA</td>
-                <td class="">{{product.quantity}}</td>
-                <td>
-                  <button class="btn edit_btn yellowBtn">Edit</button>
-                </td>
-                <td>
-                  <button class="btn delete_row deleteBtn">delete</button>
-                </td>
-              </tr>
-              {% endfor %}
+              {% if not vendor_products == None  %}
+                {% for product in vendor_products %}
+                <tr class="table_row">
+                  <td class="">{{product.name}}</td>
+                  <td class="">{{product.price}} DA</td>
+                  <td class="">{{product.quantity}}</td>
+                  <td>
+                    <button class="btn edit_btn yellowBtn">Edit</button>
+                  </td>
+                  <td>
+                    <button class="btn delete_row deleteBtn">delete</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              {% endif %}
 
             </tbody>
           </table>

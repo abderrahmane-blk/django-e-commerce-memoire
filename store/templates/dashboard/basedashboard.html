@@ -8,7 +8,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static "css/dashboard/dashboardstyles.css" %}" />
+    <link rel="stylesheet" href="{% static "css/dashboard/dashboard2.css" %}" />
     <title>Dashboard</title>
   </head>
 
@@ -24,7 +24,7 @@
         <ul>
           <li>
             <a href="{% url "the main" %}">
-              <span class="icon"><ion-icon name="logo-xing"></ion-icon></span>
+              <span class="icon"> <ion-icon name="logo-xing"></ion-icon>   </span>
               <span class="logo"> Ecommerce </span>
             </a>
           </li>
@@ -44,12 +44,7 @@
             </a>
           </li>
 
-          <li class="nav">
-            <a href="{% url "dashboard account" %}">
-              <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-              <span class="title">Account</span>
-            </a>
-          </li>
+        
 
           <li class="nav">
             <a href="{% url "dashboard sellesdata" %}">
@@ -59,7 +54,7 @@
           </li>
 
 
-          {% if not request.user.is_superuser %}
+          {% if  request.user.is_superuser %}
           <li class="nav">
             <a href="{% url "dashboard users" %}">
               <span class="icon">
@@ -70,12 +65,12 @@
           </li>
 
 
-              <li class="nav">
+          <li class="nav">
                 <a href="{% url "dashboard category" %}">
                   <span class="icon"><ion-icon name="apps-outline"></ion-icon></span>
                   <span class="title">Category</span>
                 </a>
-              </li>
+          </li>
 
           
           {% endif %}
@@ -90,27 +85,27 @@
           </li>
 
           {% comment %} change this {% endcomment %}
-          <li class="nav">
+          {% comment %} <li class="nav"> {% endcomment %}
             
             {% comment %} to be worked on  {% endcomment %}
 
-            <form method="post" action="{% url 'logout' %}" class="link-style">  
+            {% comment %} <form method="post" action="{% url 'logout' %}" class="link-style">  
               {% csrf_token %}
               <button type="" class="button">  
                 <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
                 <span class="title">Signout</span>
               </button>
-            </form>
+            </form> {% endcomment %}
 
             
 
-            <a href="" type="submit">
+            {% comment %} <a href="" type="submit">
                   <span class="icon "><ion-icon name="log-out-outline"></ion-icon></span>
                   <span class="title">Singout</span>
-              </a>
+              </a> {% endcomment %}
           
            
-          </li>
+          {% comment %} </li> {% endcomment %}
         </ul>
       </div>
 
@@ -128,25 +123,53 @@
           <div class="search">
             <label for="">
               <input type="text" placeholder="Search..." />
-              <ion-icon name="search-outline"></ion-icon>
+              <ion-icon name="search-outline@"></ion-icon>
             </label>
           </div>
-          <div class="user">
-            <img src="{% static "dashboard assets/images/user.jpg" %}" alt="" />
+          <div class="user-info" onmouseover="togglMenu()">
+            <a href="">
+              <p class="user-name">{{user.username}}</p>
+              <div class="user">
+                <img src="{% static "dashboard assets/images/user2.jpeg" %}" alt="" />
+              </div>
+            </a>
           </div>
-        </div>
-                  {% block content %}
-                  
-                  
-                  
-                  
-                  
-                  {% endblock content %}
+          <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+              <div class="info">
+                <div class="user2">
+                  <img src="{% static "dashboard assets/images/user2.jpeg" %}" alt="" />
+                </div>
+                <h3 class="user-name">{{user.email}}</h3>
+              </div>
+              <hr />
+              <a href="{%url 'profile'%}" class="sub-menu-link">
+                <img src="{% static "dashboard assets/images/profile.jpeg" %}" alt="" />
+                <p>Edit Profile</p>
+                <span>></span>
+              </a>
+              <form method="post" action="{% url "logout" %}"  >
+                {% csrf_token %}
+                <button onclick="this.form.submit()" class="sub-menu-link">
+                 <img src=" {% static "dashboard assets/images/logout.jpeg" %} " alt="" />
+                  <p>Log out</p>
+                  <span>></span> 
+                </button>
+              </form>
+            </div>
+          </div>
+ 
 
-
         </div>
+        {% block content %}
+                  
+                  
+                  
+                  
+                  
+                 {% endblock content %} 
     </div>
-    <script src="{% static "js/dashboard/dashboardmain.js" %}"></script>
+    <script src="{% static "js/dashboard/dashboard2.js" %}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <!-- =====>icons <==== -->
