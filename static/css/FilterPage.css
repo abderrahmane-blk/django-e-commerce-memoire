@@ -57,17 +57,16 @@
   position: absolute;
   right: 0;
 }
-.header {
+/* .header {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 10vh;
-  /* color: #383838; */
 }
 .header p {
   font-size: 30px;
   font-weight: bolder;
-}
+} */
 .fil-p {
   padding: 15px 15px;
   border: 1px solid var(--gray);

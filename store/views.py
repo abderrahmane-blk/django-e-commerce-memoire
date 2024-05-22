@@ -13,6 +13,7 @@ from accounts.views import timer,is_permitted
 from .forms import *
 from finance.models import Order
 
+from random import shuffle
 
 
 #usseless
@@ -440,11 +441,48 @@ def product_details(request , id):
 
 
 @timer
-def filter_page(request):
-    pass
+def filter_page(request, cat_id=None):
+    print(cat_id)
+    products=None
+    if request.method =='POST':
+        
+        min_price=request.POST.get('min_price')
+        max_price=request.POST.get('max_price')
+
+        if not min_price :
+            min_price=0 
+        if not max_price or max_price=="":
+            max_price=90000000
+
+    
+        products = Product.objects.filter(Category=cat_id).filter(price__gte=min_price,price__lte=max_price ).all().order_by('?')
+
+    if cat_id ==None:
+        products = Product.objects.filter(price__gte=min_price,price__lte=max_price ).all().order_by('?')
+    else:
+        print('hi')
+    if not products:
+        products = Product.objects.all().order_by('?')
+    categories =Category.objects.all()
+
+    return render(request,'FiltterPage.html' ,{'the_products':products,'categories':categories})
 
 
+from django.db.models import Q
 
+def filter_competetive(request,id):
+    categories =Category.objects.all()
+
+    the_product = Product.objects.filter(pk=id).first()
+    max_price=the_product.price+1000
+
+    name_competetives = Product.objects.filter(category=the_product.category).filter(name__icontains=the_product.name).filter(price__lte=max_price).all()
+    sdescription_competetives = Product.objects.filter(category=the_product.category).filter(small_description__icontains=the_product.name).filter(price__lte=max_price).all()
+    description_competetives = Product.objects.filter(category=the_product.category).filter(description__icontains=the_product.name).filter(price__lte=max_price).all()
+
+    competetives =name_competetives.union(sdescription_competetives.union(description_competetives)).all()
+
+    return render(request,'FiltterPage.html' ,{'the_products':competetives,'categories':categories})
 
 
 @csrf_exempt
@@ -651,7 +689,7 @@ def dashboard_users(request):
 
 
 def filter_page__try(request):
-    return render(request,'filtterPage.html')
+    return render(request,'FiltterPage.html')
 
 
 def try_compare(request):

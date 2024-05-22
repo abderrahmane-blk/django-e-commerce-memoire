@@ -82,10 +82,10 @@
             <img src="{{item.product.image.url}}" alt="" />
             <div class="name">{{item.product.name}}</div>
             <div class="price">{{item.product.get_price}}</div>
-            <div class="fillter_btn">
+            <a href="{% url "competetives" item.product.id %}"><div class="fillter_btn">
               <ion-icon name="trophy-outline" ></ion-icon>
               <span class="tooltiptext">search for competetive products</span>
-            </div>
+            </div></a>
             <div class="delete_btn" onclick="delCompaItem({{item.id}})">
               <ion-icon name="trash-outline" ></ion-icon>
             </div>

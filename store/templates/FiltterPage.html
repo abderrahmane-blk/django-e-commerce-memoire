@@ -56,7 +56,10 @@
     <section class="filtter_container">
       <div class="sidebar">
         <div class="filter">
-          <form action="">
+
+
+          <form method='post' action="{% url "filter" %}">
+            {% csrf_token %}
             <h3>Price Filtter</h3>
 
             <input id="filtter_btn" type="submit" value="Filter" />
@@ -64,27 +67,62 @@
             <div class="price_filter">
               <div class="min">
                 <label for="min_price">Min</label>
-                <input type="number" name="" id="min_price" min="1" class="min" />
+                <input type="number" name="min_price" id="min_price" min="1" class="min" />
               </div>
               <div class="max">
                 <label for="max_price">Max</label>
-                <input type="number" name="" id="max_price " min="1" class="max" />
+                <input type="number" name="max_price" id="max_price " min="1" class="max" />
               </div>
             </div>
             <h3>Category Filtter</h3>
-            <div id="btns"></div>
+            <div id="btns">
+              {% for cat in categories  %}
+              <button class="fil-p" onclick=""><a href="{% url "cat filter" cat.id%}">{{cat.name}}</a></button>
+              {% endfor %}
+
+            </div>
           </form>
+
+
         </div>
       </div>
+
+
+
+
+
       <div class="content">
         <div class="header">
           <p>Category Name</p>
         </div>
-        <div id="root"></div>
+        <div id="root">
+
+          {% for product in the_products %}
+
+            <div class="filter_product-card">
+              <div class="filter_product-image">
+                {% if product.is_discounted %}<span class="filter_discount-tag">{{product.get_discount}}% off</span>{% endif %}
+                <a href="productPage.html">
+                  <img src="{{product.image.url}}" class="filter_product-thumb" alt="">
+                </a>
+                <a href="{% url "add cart" product.id %}"><button  class="filter_card-btn">add to Cart</button></a>
+              </div>
+              <div class="filter_product-info">
+                <h2 class="filter_product-brand">{{product.name}}</h2>
+                <span class="filter_price">{{product.get_price}}</span>
+                {% if product.is_discounted %}<span class="filter_actual-price">{{product.price}}</span>{% endif %}
+              </div>
+            </div>
+
+          {% endfor %}
+          
+
+
+        </div>
       </div>
     </section>
 
-    <script src="{% static "js/filtter.js" %}"></script>
+    {% comment %} <script src="{% static "js/filtter.js" %}"></script> {% endcomment %}
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   </body>
 </html>

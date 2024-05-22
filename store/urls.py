@@ -19,7 +19,12 @@ urlpatterns = [
     path('comparer/',comparer , name='comparer'),
     path('comparer/add/<int:pid>' ,add_comparer_item,name='add to comparer'),
     path('comparer/del/<str:pid>' ,del_comparer_item,name='del from comparer'),
-    path('filter/' ,filter_page__try,name='filter try'),
+
+    path('filtertry/' ,filter_page__try,name='filter try'),
+    path('filter/' ,filter_page,name='filter'),
+    path('filter/<int:cat_id>' ,filter_page,name='cat filter'),
+    path('competetives/<int:id>' ,filter_competetive,name='competetives'),
+
 
 
 
