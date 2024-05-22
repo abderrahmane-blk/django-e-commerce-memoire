@@ -65,15 +65,3 @@ deletButtons.forEach((button) => {
     }
   })
 })
-// ! show form
-let edit_btns = document.querySelectorAll(".editBtn")
-let form_body = document.querySelector(".form_container")
-let add_btn = document.querySelector(".add_btn")
-
-function showForm() {
-  form_body.classList.add("form_visible")
-}
-
-function hiddeForm() {
-  form_body.classList.remove("form_visible")
-}

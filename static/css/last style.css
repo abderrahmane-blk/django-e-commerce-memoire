@@ -286,6 +286,7 @@ header {
 
 .product-brand {
   text-transform: uppercase;
+  color: #000;
 }
 
 .product-short-description {
@@ -298,9 +299,11 @@ header {
   margin: 5px 0;
 }
 
-.price {
+
+.product-info .price {
   font-weight: 900;
   font-size: 20px;
+  color: #000;
 }
 
 .actual-price {

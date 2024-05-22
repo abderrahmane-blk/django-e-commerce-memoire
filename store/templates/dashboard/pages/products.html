@@ -1,55 +1,157 @@
-{% extends "../basedashboard.html" %}
+{% extends "../basedashboard.html" %} {% load static %} {% block content %}
 
-{% load static %}
+<div class="table_container">
+  {% comment %} the add product form {% endcomment %}
+  <div class="form_container" id="form_container2">
+    <div class="form_title">Edit Product</div>
 
+    <form method="post" action="" class="form-class" id="editForm2" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="product-details">
+        <div class="form_input-box">
+          <span class="details">Name</span>
+          <input
+            type="text"
+            class="form_class"
+            name="name"
+            placeholder="Enter the Name"
+            id=""
+            required
+          />
+        </div>
 
+        <div class="form_input-box">
+          <span class="details">small description</span>
+          <input
+            type="text"
+            class="form_class"
+            name="small_description"
+            placeholder="just a small description"
+            id=""
+            required
+          />
+        </div>
 
+        <div class="form_input-box">
+          <span class="details">description</span>
+          <input
+            type="text"
+            class="form_class"
+            name="description"
+            placeholder="a good descrition of the product"
+            id=""
+            required
+          />
+        </div>
 
+        <div class="form_input-box">
+          <span class="details">Price</span>
+          <input
+            type="number"
+            class="form_class"
+            name="price"
+            placeholder="Enter the price"
+            id=""
+            required
+          />
+        </div>
 
+        <div class="form_input-box">
+          <span class="details">Promtion price</span>
+          <input
+            type="number"
+            class="form_class"
+            name="promotion_price"
+            placeholder="Enter the promotion price"
+            id=""
+            required
+          />
+        </div>
 
-{% block content %}
+        <div class="form_input-box">
+          <span class="details">Quantity</span>
+          <input
+            type="number"
+            class="form_class"
+            name="quantity"
+            placeholder="Enter the quantity"
+            id=""
+            required
+          />
+        </div>
 
-
-      <div class="table_container">
-        <div class="table_body">
-          <div class="selles-header">
-            <h2>Producs</h2>
-            <button >Add Producs</button>
+        <div class="form_input-box">
+          <span class="details">Image</span>
+          <div class="image-upload">
+            <input
+              type="file"
+              name="image"
+              placeholder=""
+              id="image_up_load"
+              required
+              style="visibility:hidden;"
+            />
+            <label for="image_up_load">
+              <ion-icon name="cloud-upload-outline"></ion-icon>
+              Choose an Image
+            </label>
           </div>
-          <table id="myTable">
-            <thead>
-              <tr>
-                <td>Name</td>
-                <td>Price</td>
-                <td>Qunatity</td>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {% if not vendor_products == None  %}
-                {% for product in vendor_products %}
-                <tr class="table_row">
-                  <td class="">{{product.name}}</td>
-                  <td class="">{{product.price}} DA</td>
-                  <td class="">{{product.quantity}}</td>
-                  <td>
-                    <button class="btn edit_btn yellowBtn">Edit</button>
-                  </td>
-                  <td>
-                    <button class="btn delete_row deleteBtn">delete</button>
-                  </td>
-                </tr>
-                {% endfor %}
-              {% endif %}
-
-            </tbody>
-          </table>
         </div>
       </div>
+      <div class="form_button">
+        <input
+          type="submit"
+          onclick="this.form.submit()"
+          style="margin-right: 6px"
+          value="edit"
+        />
+        <input type="" onclick="hiddeForm2()" value="cancel" />
+      </div>
+    </form>
+  </div>
 
-      
+
+
+
+
+
+  <div class="table_body">
+    <div class="selles-header">
+      <h2>Producs</h2>
+      <button class="btn table_header_btn " onclick="showForm3()">Add Product</button>
+    </div>
+    <table id="myTable">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Price</td>
+          <td>Qunatity</td>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% if not vendor_products == None %} 
+        {% for product in vendor_products %}
+        <tr class="table_row">
+          <td class="">{{product.name}}</td>
+          <td class="">{{product.price}} DA</td>
+          <td class="">{{product.quantity}}</td>
+          <td>
+            <button class="btn edit_btn2 yellowBtn" onclick="showForm2({{product.id}})">
+              Edit
+            </button>
+          </td>
+          <td>
+            <button class="btn delete_row deleteBtn" onclick="delete_product({{product.id}})">delete</button>
+          </td>
+        </tr>
+        {% endfor %}
+         {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="{% static "js/dashboard/dashboardmain.js" %}"></script>
+
+
 {% endblock content %}
-
-
-

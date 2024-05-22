@@ -546,11 +546,10 @@ def dashboard_account(request):
 
 # ____________dashboard CATEGORY____________
 @timer
-def dashboard_category(request):
-    user = request.user
+def dashboard_category(request,errors=[]):
     categories =Category.objects.all()
 
-    return render(request,'dashboard/pages/category.html' ,{'categories':categories})
+    return render(request,'dashboard/pages/category.html' ,{'categories':categories,'errors':errors})
 
 @csrf_exempt
 def delete_category(request,pk):
@@ -587,19 +586,28 @@ def add_category(request):
 
 
 
-@csrf_exempt  
 @require_POST
+@csrf_exempt  
 def edit_category(request ,pk):
+    errors=[]
     print(request.POST.get('new_name'))
-    # form = CategoryNameForm(initial={'new_name' :request.POST.get('new_name')})
-    # if form.is_valid():
-    #     new_name =form.cleaned_data['new_name']
-    #     print('----------')
-    #     print(new_name)
-    #     print('----------')
-    
-    new_name =request.POST.get('new_name')
+    if request.POST.get('new_name')=="":
+        errors.append('enter a name')
 
+    new_name =None
+    form = CategoryNameForm(data={'new_name' :request.POST.get('new_name')})
+    if form.is_valid():
+        new_name =form.cleaned_data['new_name']
+        print('----------')
+        print(new_name)
+        print('----------')
+    
+    else:
+        errors.append('enter a valid name')
+        return dashboard_category(request,errors=errors)
+
+    
+    
     if Category.objects.filter(name=new_name).first():
         print('a category with this name already exists')
         return JsonResponse({'message':'a category with this name already exists'})
@@ -608,13 +616,14 @@ def edit_category(request ,pk):
         cate.name =new_name
         cate.save()
         print('new name saved')
-        return JsonResponse({'message':'new name saved'})
+        # return JsonResponse({'message':'new name saved'})
+    return dashboard_category(request,errors=errors)
     
 
 
 
 
-
+# ?______________ products_______________
 @timer
 def dashboard_products(request):
     user = request.user
@@ -625,7 +634,175 @@ def dashboard_products(request):
     return render(request,'dashboard/pages/products.html' ,{'vendor_products':vendor_products})
 
 
+def edit_product(request,p_id):
+    the_product =Product.objects.filter(pk=p_id).first()
+
+    if request.method =='POST':
+        the_form=ProductForm(request.POST)
+
+        if the_form.is_valid():
+            N_name =the_form.cleaned_data['name']
+            N_small_description=the_form.cleaned_data['small_description']
+            N_description=the_form.cleaned_data['description']
+            N_price=the_form.cleaned_data['price']
+            N_promotion_price=the_form.cleaned_data['promotion_price']
+            # image=the_form.cleaned_data['image']
+            N_quantity=the_form.cleaned_data['quantity']
+
+            if N_name and N_name!='':
+                the_product.name=N_name
+
+            if N_small_description and N_small_description!='':
+                the_product.small_description=N_small_description
+
+            if N_description and N_description!='':
+                the_product.description=N_description
+
+            if N_price and N_price!='':
+                the_product.price=N_price
+
+            if N_promotion_price and N_promotion_price!='':
+                the_product.promotion_price=N_promotion_price
+
+            if N_quantity and N_quantity!='':
+                the_product.quantity=N_quantity
+            
+            
+            
+        try:
+            product_image =request.FILES['image']
+            print(product_image)
+            the_product.image=product_image
+
+        except:
+            pass
+        
+        the_product.save()
+
+
+
+    return redirect(reverse('dashboard products'))
+
+
+
+
+def add_new_product(request):
+    if request.method=='POST':
+        # the_product =Product.objects.filter(pk=p_id).first()
+        the_form = NewProductForm(data={
+            'name': request.POST.get('name'),
+            'small_description': request.POST.get('small_description'),
+            'description': request.POST.get('description'),
+            'price': request.POST.get('price'),
+            'promotion_price': request.POST.get('promotion_price'),
+            'quantity': request.POST.get('quantity'),
+        })
+        print('------------')
+        print('-----------a post request -------------')
+        print('------------------------')
+
+        if the_form.is_valid():
+            print('form valid')
+            N_name =the_form.cleaned_data['name']
+            N_small_description=the_form.cleaned_data['small_description']
+            N_description=the_form.cleaned_data['description']
+            N_price=the_form.cleaned_data['price']
+            N_promotion_price=float(the_form.cleaned_data['promotion_price'])
+            N_quantity=the_form.cleaned_data['quantity']
+
+            # print('test')
+            # print(N_name ,type(N_name))
+            # print(N_small_description ,type(N_small_description))
+            # print(N_description ,type(N_description))
+            # print(N_price ,type(N_price))
+            # print(N_promotion_price ,type(N_promotion_price))
+            # print(N_quantity ,type(N_quantity))
+
+            
+
+
+            the_user =User.objects.filter(pk=request.user.pk).first()
+            created =False
+            the_store=Store.objects.filter(vendor=request.user).first()
+            if N_name and N_name!='':
+                # print('-----------1-------------')
+                if N_small_description and N_small_description!='':
+                    # print('-----------2-------------')
+                    if N_description and N_description!='':
+                        # print('-----------3-------------')
+                        if N_price and N_price!='':
+                            # print('-----------4-------------')
+
+                            if N_quantity and N_quantity!='':
+                                if N_promotion_price: 
+                                    the_product =Product.objects.create(name=N_name,
+                                                                        small_description=N_small_description,
+                                                                        description=N_description,
+                                                                        price=N_price,
+                                                                        quantity=N_quantity,
+                                                                        owner=the_user,
+                                                                        store =the_store,
+                                                                        )
+                                    the_product.promotion_price=N_promotion_price
+
+                                    created=True
+                                    
+                                    # print(type(the_product))
+                                    # print(the_product)
+
+                                else:
+                                    the_product =Product.objects.create(name=N_name,
+                                                                    small_description=N_small_description,
+                                                                    description=N_description,
+                                                                    price=N_price,
+                                                                    quantity=N_quantity,
+                                                                    owner=the_user,
+                                                                    store =the_store,
+                                                                    )
+                                    created=True
+                                    # print(type(the_product))
+                                    # print(the_product)
+
+
+                                
+            try:
+                # print('now the image')
+                product_image =request.FILES['image']
+                print(product_image)
+                if created:
+                    try:
+                        the_product.image=product_image
+                    except:
+                        pass
+
+            except:
+                pass
+        
+            the_product.save()
+
+    return redirect(reverse('dashboard products'))
+
+
+def del_product(request,pid):
+    try:
+        prod =Product.objects.filter(pk=pid).first()
+        if prod == None:
+            print('products does not exist')
+            return JsonResponse({'message':'product does not exist'})
+
+        prod.delete()
+        print('deleted')
+        return JsonResponse({'message':'product deleted'})
+
+    except:
+        print('something occured')
+    return JsonResponse({'message':'not deleted'})
+
+
+
+
 # ____dashboard selles data
+
 @timer
 def dashboard_sellesdata(request):
     who ='all'

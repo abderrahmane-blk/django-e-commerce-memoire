@@ -11,13 +11,13 @@
 
       <div class="table_container">
         {% if request.user.is_superuser %}
-        <div class="search-for-vendor">
-          <form action="" class="form-inline">
+        
+          <form action="" class="form-inline search-for-vendor">
             
           <input type="text" name="vendor" value="{{request.GET.vendor}}" placeholder="Specific Vendor..." id="" />
           <button onclick="this.form.submit()" class="">Serach</button>
           </form>
-        </div>
+        
 
         {% endif %}
         

@@ -39,6 +39,32 @@
   </script> {% endcomment %}
 
     <div class="table_container">
+
+
+      <div class="form_container">
+        <div class="form_title">Edit Category</div>
+
+        <form method='post' action="" class="form-class" id="editForm" >
+          {% csrf_token %}
+          <div class="product-details">
+            <div class="form_input-box">
+              <span class="details">Name</span>
+              <input type="text" class="form_class" name="new_name" placeholder="Enter Category Name" id="" required />
+            </div>
+          </div>
+          <div class="form_button" >
+            <input type="submit"  onclick="this.form.submit()" style="margin-right:6px;" value="edit" />
+            <input type="submit"  onclick="hiddeForm()" value="cancel" />
+          </div>
+        </form>
+      </div>
+
+
+
+
+
+
+
       <div class="table_body">
         <div class="selles-header">
           <h2>categories</h2>
@@ -50,6 +76,9 @@
 
 
         </div>
+
+
+
         <table id="myTable">
           <thead>
             <tr>
@@ -60,22 +89,7 @@
           </thead>
 
           <tbody>
-            <div class="form_container">
-              <div class="form_title">Edit Category</div>
-
-              <form action="#" class="form-class">
-                <div class="product-details">
-                  <div class="form_input-box">
-                    <span class="details">Name</span>
-                    <input type="text" class="form_class" name="" placeholder="Enter Category Name" id="" required />
-                  </div>
-                </div>
-                <div class="form_button" >
-                  <input type="submit"  onclick="hiddeForm()" style="margin-right:6px;" value="edit" />
-                  <input type="submit"  onclick="hiddeForm()" value="cancel" />
-                </div>
-              </form>
-            </div>
+            
             
                  {% comment %} {% for category in categories %}
                   <tr class="table_row">
@@ -106,7 +120,7 @@
                 
               
                 <td>
-                  <button class="btn editBtn yellowBtn"  onclick="showForm()">Edit</button>
+                  <button class="btn editBtn yellowBtn"  onclick="showForm({{category.id}})">Edit</button>
                   
                 </td>
                 <td>
@@ -120,10 +134,20 @@
 
 
 
+            {% comment %} last  {% endcomment %}
+            
+
+
+
+
           </tbody>
         </table>
       </div>
     </div>
+
+
+
+
 
     <script src="{% static "js/dashboard/dashboardmain.js" %}"></script>
     <script src="{% static "js/dashboard/dashboard2.js" %}"></script>

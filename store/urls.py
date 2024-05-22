@@ -41,10 +41,15 @@ urlpatterns = [
         path('dashboard/category/' ,dashboard_category ,name='dashboard category'),
             path('dashboard/category/add/' ,add_category ,name='new category'),
             path('dashboard/category/del/<int:pk>' ,delete_category ,name='del category'),
-            path('dashboard/category/edit/<int:pk>' ,edit_category ,name='edit category'),
+            path('dashboard/category/edit/<int:pk>/' ,edit_category ,name='edit category'),
 
 
         path('dashboard/products/' ,dashboard_products ,name='dashboard products'),
+        path('dashboard/products/add/' ,add_new_product ,name='add product'),
+        path('dashboard/product/edit/<int:p_id>/' ,edit_product ,name='edit product'),
+        path('dashboard/product/del/<int:pid>' ,del_product ,name='del product'),
+
+
         path('dashboard/sellesdata/' ,dashboard_sellesdata ,name='dashboard sellesdata'),
         path('dashboard/settings/' ,dashboard_settings ,name='dashboard settings'),
         path('dashboard/users/' ,dashboard_users ,name='dashboard users'),
