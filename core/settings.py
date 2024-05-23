@@ -85,12 +85,29 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'memoire',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',  # 'localhost' if MySQL runs on the same machine
+        'PORT': '3306',  # Default MySQL port
     }
 }
+
+
+
+
+
+
 
 
 # Password validation
@@ -148,8 +165,8 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database backend
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL='login-test'
-LOGOUT_REDIRECT_URL='login-test'
+LOGIN_REDIRECT_URL='dashboard'
+LOGOUT_REDIRECT_URL='login'
 
 
 PAYPAL_RECEIVER_EMAIL ='memoireUS@business.example.com'     #here the money goes ; then we send to each vendor his money after he accomplishes his work

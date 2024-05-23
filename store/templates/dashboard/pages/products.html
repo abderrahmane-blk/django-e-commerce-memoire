@@ -45,6 +45,26 @@
         </div>
 
         <div class="form_input-box">
+          <span class="details">select category</span>
+          {% comment %} <input
+            type="select"
+            
+            class="form_class"
+            name="description"
+             placeholder="a good descrition of the product"
+            id=""
+            required 
+          /> {% endcomment %}
+          <select name="chosen_category" id="cars" class="form_class"  id="select-input" required>
+            {% for category in categories %}
+              <option class="form_class" value="{{category.id}}">{{category.name}}</option>
+            {% endfor %}
+          </select>
+        
+        
+        </div>
+
+        <div class="form_input-box">
           <span class="details">Price</span>
           <input
             type="number"
@@ -91,7 +111,7 @@
               required
               style="visibility:hidden;"
             />
-            <label for="image_up_load">
+            <label for="image_up_load" id="image-label">
               <ion-icon name="cloud-upload-outline"></ion-icon>
               Choose an Image
             </label>

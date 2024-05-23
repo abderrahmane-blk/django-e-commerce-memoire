@@ -28,9 +28,6 @@ urlpatterns = [
 
 
 
-
-
-
 # implementing the front end
 
     path('' ,app_main ,name='the main' ),
@@ -52,7 +49,17 @@ urlpatterns = [
 
         path('dashboard/sellesdata/' ,dashboard_sellesdata ,name='dashboard sellesdata'),
         path('dashboard/settings/' ,dashboard_settings ,name='dashboard settings'),
+
         path('dashboard/users/' ,dashboard_users ,name='dashboard users'),
+        path('dashboard/users/ban/<int:u_id>' ,userban ,name='user ban'),
+        path('dashboard/users/reautherize/<int:u_id>' ,user_reautherize ,name='user reautherize'),
+
+
+        path('dashboard/orders/' ,dashboard_orders ,name='dashboard orders'),
+        path('dashboard/orders/accept/<int:o_id>' ,accept_order ,name='accept order'),
+        path('dashboard/orders/cancel/<int:o_id>' ,cancel_order ,name='cancel order'),
+        path('dashboard/orders/uncancel/<int:o_id>' ,uncancel_order ,name='uncancel order'),
+        path('dashboard/orders/sent/<int:o_id>' ,order_on_the_way ,name='order sent'),
 
 
 
@@ -61,6 +68,11 @@ urlpatterns = [
     path('compar/' ,try_compare ,name='co'),
     path('comparD/' ,get_comparer_data ,name='get comparer data'),
     path('compar/del/<int:the_id>' ,del_comparer_item2 ,name='get comparer data'),
+
+
+
+    path('admin/' ,django_admmin ,name='django admin panel'),
+
 
 
 

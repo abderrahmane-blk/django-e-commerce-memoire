@@ -32,12 +32,17 @@
                   <td class="">{{user.id}}</td>
                   <td class="">{{user.username}}</td>
                   <td class="">{{user.type}}</td>
-                  <td>
-                    <button class="btn ban_btn yellowBtn">Ban</button>
-                  </td>
-                  <td>
-                    <button class="btn delete_row deleteBtn">delete</button>
-                  </td>
+
+                  {% if user.is_banned %}
+                    <td>
+                      <a href="{% url "user reautherize" user.id%}"><button  class="btn delete_row ">reautherize</button></a>
+                    </td>
+                  {% else %}
+                    <td>
+                      <a href="{% url "user ban" user.id%}"><button  class="btn ban_btn yellowBtn">Ban</button><a>
+                    </td>
+                  {% endif %}
+                  
                 </tr>
 
             {% endfor %}

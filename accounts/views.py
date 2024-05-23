@@ -112,11 +112,11 @@ def register_vendor(request):
 
 
             # the store of the vendor
-            store_name = form.cleaned_data['bio']
-            deposit_account = form.cleaned_data['bio']
+            store_name = form.cleaned_data['store_name']
+            deposit_account = form.cleaned_data['deposit_account']
 
             new_store =Store.objects.create(store_name=store_name ,deposit_account =deposit_account ,vendor =new_user)
-            # new_store.save()
+            new_store.save()
             print(new_store)
             """
             change it to save later

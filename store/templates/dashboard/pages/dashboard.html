@@ -22,7 +22,7 @@
     <a href="">
       <div class="card">
         <div>
-          <div class="numbers">{{total_paid}}.00 DA</div>
+          <div class="numbers">{{total_paid}}DA</div>
           <div class="cardName">Earning</div>
         </div>
         <div class="iconBx">
@@ -32,6 +32,7 @@
     </a>
   </div>
 
+  {% if request.user.is_superuser %}
 <div class="details">
   <div class="recentOrders">
     <div class="cardHeader">
@@ -39,6 +40,7 @@
       <a href="#" class="btn">View All</a>
     </div>
 
+    {% comment %} !orders {% endcomment %}
     <table>
       <thead>
         <tr>
@@ -50,14 +52,16 @@
       </thead>
 
       <tbody>
+        {% for order in recent_orders  %}
+        
         <tr>
-          <td>Order 1</td>
-          <td>1200.00DA</td>
+          <td>{{order.id}}</td>
+          <td>{{order.price_paid}}</td>
           <td></td>
-          <td><span class="status delivered">Delivered</span></td>
+          <td><span class="status delivered">{{order.order_status}}</span></td>
         </tr>
 
-        <tr>
+        {% comment %} <tr>
           <td>Order 2</td>
           <td>110.00DA</td>
           <td></td>
@@ -104,129 +108,137 @@
           <td>620.00DA</td>
           <td></td>
           <td><span class="status inProgress">In Progress</span></td>
-        </tr>
+        </tr> {% endcomment %}
+        {% endfor %}
       </tbody>
     </table>
   </div>
+  {% endif %}
 
   <!-- ? ================= New Customers ================ -->
-  <div class="recentCustomers">
-    <div class="cardHeader">
-      <h2>Recent Users</h2>
+  {% if request.user.is_superuser %}
+    <div class="recentCustomers">
+      <div class="cardHeader">
+        <h2>Recent Users</h2>
+      </div>
+
+      <table>
+        {% for recent_user in recent_users %}
+        <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static "dashboard assets/images/user.jpg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>{{recent_user.username}}<br /></h4>
+          </td>
+          <td>
+            <h4>
+              <span>{{recent_user.usertype}}</span>
+            </h4>
+          </td>
+        </tr>
+      
+
+        {% comment %} <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static "dashboard assets/user3.svg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>Abdelkader <br /></h4>
+          </td>
+          <td>
+            <h4>
+              <span>Vendor</span>
+            </h4>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static " dashboard assets/images/user2.jpeg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>Oualid <br /></h4>
+          </td>
+          <td>
+            <h4>
+              <span>Customer</span>
+            </h4>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static "dashboard assets/user3.svg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>Omar <br /></h4>
+          </td>
+
+          <td>
+            <h4>
+              <span>Customer</span>
+            </h4>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static "dashboard assets/user3.svg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>Ahmed <br /></h4>
+          </td>
+          <td>
+            <h4><span>Vendor</span></h4>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static "dashboard assets/user3.svg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>Youcef <br /></h4>
+          </td>
+
+          <td>
+            <h4>
+              <span>Customer</span>
+            </h4>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static "dashboard assets/user3.svg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>Kossai <br /></h4>
+          </td>
+          <td>
+            <h4><span>Vendor</span></h4>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="60px">
+            <div class="imgBx"><img src="{% static "dashboard assets/user3.svg" %}" alt="" /></div>
+          </td>
+          <td>
+            <h4>Alla <br /></h4>
+          </td>
+          <td>
+            <h4>
+              <span>Customer</span>
+            </h4>
+          </td>
+        </tr> {% endcomment %}
+        {% endfor %}
+      </table>
+      
     </div>
-
-    <table>
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Ismalil <br /></h4>
-        </td>
-        <td>
-          <h4>
-            <span>Vendor</span>
-          </h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Abdelkader <br /></h4>
-        </td>
-        <td>
-          <h4>
-            <span>Vendor</span>
-          </h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Oualid <br /></h4>
-        </td>
-        <td>
-          <h4>
-            <span>Customer</span>
-          </h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Omar <br /></h4>
-        </td>
-
-        <td>
-          <h4>
-            <span>Customer</span>
-          </h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Ahmed <br /></h4>
-        </td>
-        <td>
-          <h4><span>Vendor</span></h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Youcef <br /></h4>
-        </td>
-
-        <td>
-          <h4>
-            <span>Customer</span>
-          </h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Kossai <br /></h4>
-        </td>
-        <td>
-          <h4><span>Vendor</span></h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td width="60px">
-          <div class="imgBx"><img src="assets/images/user-3.svg" alt="" /></div>
-        </td>
-        <td>
-          <h4>Alla <br /></h4>
-        </td>
-        <td>
-          <h4>
-            <span>Customer</span>
-          </h4>
-        </td>
-      </tr>
-    </table>
-  </div>
+  {% endif %}
 </div>
 
 {% endblock content %}

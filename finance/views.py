@@ -67,6 +67,8 @@ def payment_success(request):
     cart = Cart.objects.filter(session_id=sessionKey).last()
     cart_items =cart.cart_item_set.select_related('product').all()
 
+    print('to here')
+
     # for item in cart_items:
     #     print(item.product.name,'   Q:',item.quantity)
 
@@ -75,6 +77,9 @@ def payment_success(request):
 
     this_transaction =Transaction.objects.filter(cart=cart).last()
     print(this_transaction.created_at)
+
+    print('to here2')
+
 
     # making the new orders
     for item in cart_items:

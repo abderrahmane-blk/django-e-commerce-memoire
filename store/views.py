@@ -14,6 +14,8 @@ from .forms import *
 from finance.models import Order
 
 from random import shuffle
+from finance.models import OrderStatus
+
 
 
 #usseless
@@ -383,7 +385,7 @@ def add_comparer_item(request ,pid):
     items_in_comparer =comparer.comparer_product_set.count() 
     print('we have in  the comparer ::: '+str(items_in_comparer))
 
-    return redirect(reverse('comparer'))
+    return redirect(reverse('product',args=[pid]))
 
     """later the return should be changed to this
         return JsonResponse({
@@ -455,20 +457,25 @@ def filter_page(request, cat_id=None):
             max_price=90000000
 
     
-        products = Product.objects.filter(Category=cat_id).filter(price__gte=min_price,price__lte=max_price ).all().order_by('?')
+        products = Product.objects.filter(category=cat_id).filter(price__gte=min_price,price__lte=max_price ).all().order_by('?')
 
+    else:
+        min_price=0 
+        max_price=9000000
     if cat_id ==None:
         products = Product.objects.filter(price__gte=min_price,price__lte=max_price ).all().order_by('?')
     else:
-        print('hi')
-    if not products:
-        products = Product.objects.all().order_by('?')
+        the_cate=Category.objects.filter(pk =cat_id).first()
+        products = Product.objects.filter(price__gte=min_price,price__lte=max_price ,category=the_cate).all().order_by('?')
+
+    # if not products:
+    #     products = Product.objects.all().order_by('?')
     categories =Category.objects.all()
 
     return render(request,'FiltterPage.html' ,{'the_products':products,'categories':categories})
 
 
-from django.db.models import Q
+
 
 def filter_competetive(request,id):
     categories =Category.objects.all()
@@ -524,15 +531,22 @@ def threat(request):
 @timer
 @login_required
 def dashboard(request):
+    if request.user.is_banned:
+        return redirect(reverse('the main'))
 
     from django.db.models import Sum,Count
-    sales= Order.objects.filter(store__vendor =request.user).aggregate(sales_number=Count('price_paid'))['sales_number']
-    earnings= Order.objects.filter(store__vendor =request.user).aggregate(total_sales=Sum('price_paid'))['total_sales']
+    sales= Order.objects.filter(order_status='sent',store__vendor =request.user).aggregate(sales_number=Count('price_paid'))['sales_number']
+    earnings= Order.objects.filter(order_status='sent',store__vendor =request.user).aggregate(total_sales=Sum('price_paid'))['total_sales']
+    if earnings is None :
+        earnings=0
+
+    recent_users =User.objects.order_by('date_joined').all()[0:10]
+    recent_orders =Order.objects.order_by('created_on').all()[0:10]
     # print(earnings)
     # print(sales)
    
 
-    return render(request,'dashboard/pages/dashboard.html' ,{'sales_number':sales,'total_paid':earnings})
+    return render(request,'dashboard/pages/dashboard.html' ,{'sales_number':sales,'total_paid':earnings,'recent_users':recent_users,'recent_orders':recent_orders})
 
 
 @timer
@@ -620,6 +634,52 @@ def edit_category(request ,pk):
     return dashboard_category(request,errors=errors)
     
 
+#! dashboard Orders
+
+
+def dashboard_orders(request):
+
+    the_store = Store.objects.filter(vendor=request.user).first()
+    the_orders =Order.objects.filter(store=the_store,).all()
+
+    # {'categories':categories,'errors':errors}
+    return render(request, "dashboard/pages/orders.html" ,{'orders':the_orders})
+
+
+def accept_order(request,o_id):
+    # check if this user is the store owner before
+    the_order =Order.objects.filter(pk=o_id).first()
+    the_order.order_status =OrderStatus.TO_BE_SENT
+    the_order.save()
+
+    return redirect(reverse('dashboard orders'))
+
+
+def cancel_order(request,o_id):
+    # check if this user is the store owner before
+    the_order =Order.objects.filter(pk=o_id).first()
+    the_order.order_status =OrderStatus.CANCELED
+    the_order.save()
+
+    return redirect(reverse('dashboard orders'))
+
+
+def order_on_the_way(request,o_id):
+    # check if this user is the store owner before
+    the_order =Order.objects.filter(pk=o_id).first()
+    the_order.order_status =OrderStatus.SENT
+    the_order.save()
+
+    return redirect(reverse('dashboard orders'))
+
+def uncancel_order(request,o_id):
+    # check if this user is the store owner before
+    the_order =Order.objects.filter(pk=o_id).first()
+    the_order.order_status =OrderStatus.WAITING
+    the_order.save()
+
+    return redirect(reverse('dashboard orders'))
+
 
 
 
@@ -630,8 +690,9 @@ def dashboard_products(request):
     store =Store.objects.filter(vendor=user.id).first()
     print(store)
     vendor_products =Product.objects.filter(store=store).all()
+    cates =Category.objects.all()
 
-    return render(request,'dashboard/pages/products.html' ,{'vendor_products':vendor_products})
+    return render(request,'dashboard/pages/products.html' ,{'vendor_products':vendor_products,'categories':cates})
 
 
 def edit_product(request,p_id):
@@ -685,7 +746,6 @@ def edit_product(request,p_id):
 
 
 
-
 def add_new_product(request):
     if request.method=='POST':
         # the_product =Product.objects.filter(pk=p_id).first()
@@ -707,8 +767,14 @@ def add_new_product(request):
             N_small_description=the_form.cleaned_data['small_description']
             N_description=the_form.cleaned_data['description']
             N_price=the_form.cleaned_data['price']
-            N_promotion_price=float(the_form.cleaned_data['promotion_price'])
+            if request.POST.get('promotion_price') and request.POST.get('promotion_price')!="":
+                N_promotion_price=float(the_form.cleaned_data['promotion_price'])
+            else:
+                N_promotion_price=None
             N_quantity=the_form.cleaned_data['quantity']
+
+            N_cate =int(request.POST.get('chosen_category'))
+            N_cate =Category.objects.filter(pk=N_cate).first()
 
             # print('test')
             # print(N_name ,type(N_name))
@@ -734,7 +800,8 @@ def add_new_product(request):
                             # print('-----------4-------------')
 
                             if N_quantity and N_quantity!='':
-                                if N_promotion_price: 
+                                print(N_promotion_price)
+                                if N_promotion_price !="": 
                                     the_product =Product.objects.create(name=N_name,
                                                                         small_description=N_small_description,
                                                                         description=N_description,
@@ -742,6 +809,7 @@ def add_new_product(request):
                                                                         quantity=N_quantity,
                                                                         owner=the_user,
                                                                         store =the_store,
+                                                                        category=N_cate,
                                                                         )
                                     the_product.promotion_price=N_promotion_price
 
@@ -812,15 +880,15 @@ def dashboard_sellesdata(request):
         if vendor_name:
             who =''
             vendor =User.objects.filter(username__icontains=vendor_name).all()
-            the_store =Store.objects.filter(vendor__in=vendor).first()
+            the_store =Store.objects.filter(vendor__in=vendor).all()
 
-            filters['store']=the_store
+            filters['store__in']=the_store
         
         orders = Order.objects.filter(**filters).select_related('store','store__vendor').order_by('-created_on').all()
 
     else:
         the_store =Store.objects.filter(vendor=request.user).first()
-        orders = Order.objects.select_related('store','store__vendor').order_by('-created_on').filter(store=the_store).all()
+        orders = Order.objects.select_related('store','store__vendor').order_by('-created_on').filter(store=the_store,order_status='sent').all()
 
 
     return render(request,'dashboard/pages/sellesdata.html' ,{'orders':orders ,'who':who})
@@ -860,6 +928,36 @@ def dashboard_users(request):
     return render(request,'dashboard/pages/users.html' ,{'users':users})
 
 
+def userban(request,u_id):
+    
+    if not request.user.is_superuser:
+        return redirect(reverse('dashboard'))
+    
+    the_user=User.objects.filter(pk=u_id).first()
+    print('banning ')
+    the_user.is_banned=True
+    the_user.is_active=False
+    the_user.save()
+
+    return redirect(reverse('dashboard users'))
+
+
+def user_reautherize(request,u_id):
+    if not request.user.is_superuser:
+        return redirect(reverse('dashboard'))
+
+    the_user=User.objects.filter(pk=u_id).first()
+    print('re autherizing ')
+    the_user.is_banned=False
+    the_user.is_active=True
+    the_user.save()
+
+    return redirect(reverse('dashboard users'))
+
+
+
+
+
 
 
 
@@ -876,3 +974,12 @@ def get_comparer_data(request):
     co_items =Comparer_product.objects.filter('comparer__session'=='vigy63yssnksm4689yu5pigu2xvefcin').all()
     print(co_items)
     return JsonResponse({'message':None})
+
+
+
+
+
+
+
+def django_admmin(request):
+    return redirect(reverse('the admin')) 

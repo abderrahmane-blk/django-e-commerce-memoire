@@ -17,7 +17,7 @@ class transactionStatus(models.TextChoices):
 
 class Transaction(models.Model):
     cart=models.ForeignKey(Cart,null=True, on_delete=models.SET_NULL)
-    total = models.DecimalField( max_digits=10, decimal_places=2 )
+    total = models.DecimalField(max_digits=7, decimal_places=2 )#
     customer = models.ForeignKey(User ,null=True ,on_delete=models.SET_NULL) #null because the customer could be anonymous
     more_info=models.JSONField(blank=True, null=True)
     payment_method =models.CharField(max_length=50 ,null=True)
@@ -29,14 +29,15 @@ class Transaction(models.Model):
 
 
 class OrderStatus(models.TextChoices):
+    WAITING ='waiting', 'waiting'
     TO_BE_SENT ='to be sent', ' to be sent'
-    SENT ='sent', 'order sent'
-    CANCELED='CANCELED', 'order canceled'
+    SENT ='sent', 'sent'
+    CANCELED='canceled', 'canceled'
     
 
 class Order(models.Model):
-    item =models.OneToOneField(Product, on_delete=models.SET_NULL ,null=True)
-    price_paid = models.DecimalField(max_digits=6, decimal_places=2 ,null=False)# the price indicates how much it is when the customer clicks buy
+    item =models.ForeignKey(Product, on_delete=models.SET_NULL ,null=True)
+    price_paid = models.DecimalField(max_digits=8, decimal_places=2 ,null=False)# the price indicates how much it is when the customer clicks buy
     quantity =models.IntegerField(default=1)
 
     customer = models.ForeignKey(User ,on_delete=models.SET_NULL, null=True) #may be it has to be changed to PROTECT , but that will do problems deleting the users from the database
@@ -44,7 +45,7 @@ class Order(models.Model):
 
     the_transaction = models.ForeignKey(Transaction ,on_delete=models.SET_NULL, null=True)
 
-    order_status =models.CharField(max_length=50 ,choices=OrderStatus.choices ,default =OrderStatus.TO_BE_SENT)
+    order_status =models.CharField(max_length=50 ,choices=OrderStatus.choices ,default =OrderStatus.WAITING)
 
     created_on = models.DateTimeField(auto_now_add=True)
 

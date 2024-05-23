@@ -19,7 +19,7 @@ class NewProductForm(forms.Form):
     small_description=forms.CharField(max_length=1500,required=True)
     description = forms.CharField(required=True)
     price = forms.DecimalField(max_digits=8, decimal_places=2,required=True)  
-    promotion_price= forms.DecimalField(max_digits=8, decimal_places=2 ,required=True )
+    promotion_price= forms.DecimalField(max_digits=8, decimal_places=2 ,required=False )
     # image = forms.ImageField(required=True)  
     quantity = forms.IntegerField(required=True,)
 

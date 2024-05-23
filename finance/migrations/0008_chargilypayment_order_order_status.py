@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='ChargilyPayment',
             fields=[
                 ('invoice_number', models.BigAutoField(primary_key=True, serialize=False)),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=1000000)),
+                ('amount', models.DecimalField(decimal_places=2, max_digits=64)),
                 ('comment', models.TextField()),
                 ('discount', models.FloatField(blank=True, default=0, max_length=2)),
                 ('mode', models.CharField(choices=[('CIB', 'CIB'), ('EDAHABIA', 'EDAHABIA')], default='EDAHABIA', max_length=25)),

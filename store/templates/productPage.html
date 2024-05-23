@@ -46,23 +46,7 @@
                   <span class="text-gray-600 ml-3">4 Reviews</span>
                 </span>
                 
-                <!-- <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
-                  <a class="text-gray-500">
-                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-                      <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                    </svg>
-                  </a>
-                  <a class="ml-2 text-gray-500">
-                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-                      <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                    </svg>
-                  </a>
-                  <a class="ml-2 text-gray-500">
-                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-                      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                    </svg>
-                  </a>
-                </span> -->
+
 
               </div>
               <p class="leading-relaxed">{{product.description}}</p>
@@ -90,28 +74,24 @@
                   </div>
                 </div>
               </div>
-              <div class="flex mb-0">
+              <div class="flex" style="justify-content:space-between;gap:1rem; padding:39px 0">
                 <span class="title-font font-medium text-2xl text-gray-900">{{product.price}} DA</span>
                 {% if not product.is_discounted  %}
-                                      <span class="price">{{ product.price }}DA </span>
+                                      <span class="title-font font-medium text-2xl text-gray-600">{{ product.price }}DA </span>
 
                                     {% else %}
-                                        
-                                      <span class="price">{{ product.promotion_price }}DA </span>
-                                      <span class="actual-price">{{product.price}}DA</span> 
+                                      {% comment %} <span class=" ">{{ product.promotion_price }}DA </span> {% endcomment %}
+                                      <span class="title-font font-medium text-1xl "
+                                      style="opacity: 0.5; text-decoration: line-through" >{{product.price}}DA</span> 
                                     {% endif %}
                 
-                              <button class="blue flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"><a href="{% url "add cart" product.id %}" class="text-white"style="text-decoration: none;
-                                text-transform: none;">Add To Cart</a></button> 
+                              <button class="flex  text-white  border-0   rounded" style="background-color:#1e93ec; max-width:fit-content;align-items:center;max-height:fit-content; padding:4px font-size:16px"><a href="{% url "add cart" product.id %}" class="text-white"style="text-decoration: none;
+                                text-transform: none;padding:0 5px;max-height:fit-content">Add To Cart</a></button> 
 
-                                <button class="blue flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"><a href="{% url "add to comparer" product.id %}" class="text-white"style="text-decoration: none;
-                                  text-transform: none;">Add To comparer</a></button> 
+                                <button class=" flex text-white  border-0  rounded " style=" background-color:#1e93ec; max-width:fit-content;align-items:center; padding:2px 3px; max-height:fit-content;" ><a href="{% url "add to comparer" product.id %}" class="text-white"style=" font-size:14px;text-decoration: none;
+                                  text-transform: none; padding: 3px 0 ">Add To comparer</a></button> 
                 
-                {% comment %} <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"> {% endcomment %}
-                  {% comment %} <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24"> {% endcomment %}
-                    {% comment %} <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path> {% endcomment %}
-                  {% comment %} </svg> {% endcomment %}
-                {% comment %} </button> {% endcomment %}
+              
               </div>
             </div>
           </div>
@@ -120,18 +100,19 @@
 
 
 
-        
+{% comment %}         
         <form method='post' action="{% url "comment" product.id %}">
           <input  type="text" name="comment" id="">
           <input type="submit">
         </form>
 
-
+ {% endcomment %}
 
 
 
 
         <div class="comment-session">
+          <h2 id="comment-title" style="font-size: xx-large;font-weight: 600;">Comments</h2>
           <div class="post-comment">
 
             {% for comment in comments %}
@@ -152,7 +133,7 @@
 
             
             <br>
-            <h1>give comment</h1>
+            {% comment %} <h1 >give comment</h1> {% endcomment %}
 
             <br>
 

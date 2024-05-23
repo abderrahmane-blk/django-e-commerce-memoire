@@ -396,7 +396,6 @@ body {
 .details {
   position: relative;
   width: 100%;
-  padding: 20px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 30px;
@@ -573,6 +572,7 @@ body {
   border: none;
   outline: none;
   cursor: pointer;
+  background-color: var(--blue);
 }
 .btn:hover {
   opacity: 0.8;
@@ -793,14 +793,13 @@ margin: 20px 0 12px 0;
 }
  .form_input-box {
 width: calc(100% / 2 - 20px);
-margin: 10px 0 20px 0;
 }
 
  .form_input-box .details {
 font-weight: 500;
 margin: 10px 0 20px 0;
 }
- .form_input-box input {
+ .form_input-box input , .form_input-box select {
 height: 45px;
 width: 100%;
 outline: none;
@@ -809,31 +808,38 @@ border: 1px solid #ccc;
 padding-left: 15px;
 font-size: 16px;
 }
-form .form_image {
-width: calc(100% / 2 - 20px);
-margin: 10px 0 20px 0;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
+
+.form_image {
+  width: calc(100% / 2 - 20px);
+  margin: 10px 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-form .form_image input {
-display: none;
+.form_image input {
+  display: none;
 }
-.form_image label {
-font-size: 18px;
-color: white;
-background-color: yellowgreen;
-border-radius: 5px;
-padding: 10px;
-width: 60%;
-display: flex;
-align-items: center;
-justify-content: space-between;
-cursor: pointer;
+.image-upload{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  align-content: center;
+}
+#image-label {
+  font-size: 18px;
+  color: white;
+  background-color: yellowgreen;
+  border-radius: 5px;
+  padding: 10px;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 .form_image label ion-icon {
-width: 1rem;
+  width: 1rem;
 }
 form .product-details textarea {
 width: 200%;
@@ -853,9 +859,12 @@ border-color: green;
 margin: auto;
 display: flex;
 align-items: center;
+justify-content:space-between;
 }
+
 .form_button input {
-width: max-content;
+text-align: center;
+  width: 20%;
 height: 40px;
 padding: 5px 20px;
 outline: none;
@@ -871,112 +880,7 @@ cursor: pointer;
 color: #222;
 }
 
-/* 
-.form_container {
-max-width: 700px;
-width: 100%;
-border-radius: 8px;
-padding: 25px 30px;
-box-shadow: 3px 5px 18px 0px rgba(0, 0, 0, 0.8);
-}
-.form_container .form_title {
-font-size: 25px;
-font-weight: 700;
-width: max-content;
-position: relative;
-}
 
-.form_container .form_title::before {
-content: "";
-position: absolute;
-height: 3px;
-width: 100%;
-left: 0;
-bottom: 0;
-background-color: var(--blue);
-}
-.form_container form .product-details {
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-margin: 20px 0 12px 0;
-}
-.form_container form .product-details .form_input-box {
-width: calc(100% / 2 - 20px);
-margin: 10px 0 20px 0;
-}
-
-.form_container .product-details .form_input-box .details {
-font-weight: 500;
-margin: 10px 0 20px 0;
-}
-.form_container form .product-details .form_input-box input {
-height: 45px;
-width: 100%;
-outline: none;
-border-radius: 5px;
-border: 1px solid #ccc;
-padding-left: 15px;
-font-size: 16px;
-}
-.form_container form .form_image {
-width: calc(100% / 2 - 20px);
-margin: 10px 0 20px 0;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-}
-
-.form_container form .form_image input {
-display: none;
-}
-.form_container form .form_image label {
-font-size: 18px;
-color: white;
-background-color: yellowgreen;
-border-radius: 5px;
-padding: 10px;
-width: 60%;
-display: flex;
-align-items: center;
-justify-content: space-between;
-cursor: pointer;
-}
-.form_container form .form_image label ion-icon{
-width:1rem;
-}
-.form_container form .product-details textarea {
-width: 200%;
-height: 80px;
-border-radius: 5px;
-border: 1px solid #ccc;
-padding: 10px;
-top: 0;
-bottom: 0;
-}
-
-.form_container form .product-details .form_input-box input:focus,
-.form_container form .product-details .form_input-box input:valid {
-border-color: green;
-}
-form .form_button {
-margin: auto;
-display: flex;
-align-items: center;
-}
-.form_container form .form_button input {
-width: max-content;
-height: 40px;
-padding: 5px 20px;
-outline: none;
-color: white;
-border: none;
-letter-spacing: 1px;
-font-size: 18px;
-background-color: var(--blue);
-border-radius:0.9rem;
-cursor: pointer;
-} */
 .selles-header {
   display: flex;
   justify-content: space-between;

@@ -26,7 +26,7 @@ class New_vendor_form(forms.Form):
     bio = forms.CharField(max_length=2024  ,required=False, widget=forms.Textarea(attrs=register_attrs))
     
     #store properties
-    # store_name = forms.CharField(max_length=255 ,required=True, widget=forms.TextInput(attrs=register_attrs))
+    store_name = forms.CharField(max_length=255 ,required=True, widget=forms.TextInput(attrs=register_attrs))
     deposit_account =forms.CharField(max_length=255 ,required=True, widget=forms.TextInput(attrs=register_attrs))
 
 

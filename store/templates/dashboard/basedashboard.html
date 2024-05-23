@@ -54,6 +54,17 @@
           </li>
 
 
+          <li class="nav">
+            <a href="{% url "dashboard orders" %}">
+              <span class="icon">
+                <ion-icon name="prism-outline"></ion-icon>
+              </span>
+              <span class="title">Orders</span>
+            </a>
+          </li>
+          
+
+
           {% if  request.user.is_superuser %}
           <li class="nav">
             <a href="{% url "dashboard users" %}">
@@ -72,6 +83,12 @@
                 </a>
           </li>
 
+          <li class="nav">
+            <a href="{% url "django admin panel" %}">
+              <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+              <span class="title">admin panel</span>
+            </a>
+          </li>
           
           {% endif %}
 

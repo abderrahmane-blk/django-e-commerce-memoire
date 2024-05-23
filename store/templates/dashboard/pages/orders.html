@@ -1,0 +1,91 @@
+{% extends "../basedashboard.html" %}
+
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+
+<div class="table_container">
+    <div class="table_body">
+      <div class="table_header">
+        <h2>Recent Orders</h2>
+        <!-- <a href="../../Forms/decitProduct.html" class="table_header_btn">Add Product</a> -->
+      </div>
+      <table id="myTable">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>Amount</td>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% for order in orders %}
+          <tr class="table_row">
+            <td class="">{{order.id}}</td>
+            <td class="">{{order.price_paid}}</td>
+
+                {% if order.order_status == 'waiting' %}
+                <td>
+                  <a href="{% url "accept order" order.id %}"><button class="btn editBtn greenBtn" onclick="showForm()">Accept</button></a>
+                  {% comment %} <div class="form_container">
+                    <div class="form_title">Edit Category</div>
+                    <form action="#">
+                      <div class="product-details">
+                        <div class="form_input-box">
+                          <span class="details">Name</span>
+                          <input type="text" name="" placeholder="Enter Product Name" id="" required />
+                        </div>
+                      </div>
+                      <div class="form_button">
+                        <input type="submit" onclick="hiddeForm()" value="Add" />
+                        <input type="submit" value="Cancel" onclick="hiddeForm()" />
+                      </div>
+                    </form>
+                  </div> {% endcomment %}
+                </td>
+                <td>
+                  <a href="{% url "cancel order" order.id %}"><button class="btn delete_row deleteBtn">Cancel</button></a>
+                </td>
+              </tr>
+              {% elif order.order_status == 'canceled'%}
+              {% comment %} ! {% endcomment %}
+              <td>
+                <a href="{% url "uncancel order" order.id %}"><button class="btn delete_row yellowBtn">unCancel</button></a>
+              </td>
+              {% elif order.order_status == 'to be sent'%}
+              <td>
+                <a href="{% url "order sent" order.id %}"><button class="btn delete_row greenBtn">Sent</button></a>
+              </td>
+              {% elif order.order_status == 'sent'%}
+              <td>
+                {% comment %} <a href=""> {% endcomment %}
+                  <button class="btn greenBtn">on the way</button>
+                {% comment %} </a> {% endcomment %}
+              </td>
+
+
+              
+
+              {% endif %}
+          {% endfor %}
+
+
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock content %}
+
+
+
+
+        
